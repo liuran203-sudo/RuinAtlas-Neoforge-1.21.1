@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ruinatlas:pale_jade_shard"
+    },
+    {
+      "item": "ruinatlas:pale_jade_shard"
+    },
+    {
+      "item": "ruinatlas:pale_jade_shard"
+    },
+    {
+      "item": "ruinatlas:old_copper_token"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ruinatlas:sacrificial_jade"
+  }
+}

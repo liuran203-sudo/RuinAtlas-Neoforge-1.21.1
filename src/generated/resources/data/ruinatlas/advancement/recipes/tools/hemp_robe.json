@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_reed_stalk": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:reed_stalk"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:hemp_robe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_reed_stalk"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:hemp_robe"
+    ]
+  }
+}

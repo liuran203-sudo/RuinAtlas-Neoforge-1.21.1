@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:ward_evil_scroll"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_ward_evil_rubbing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:ward_evil_rubbing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ward_evil_rubbing"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:ward_evil_scroll"
+    ]
+  }
+}

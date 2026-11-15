@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ruinatlas:old_copper_token"
+    },
+    {
+      "item": "ruinatlas:old_copper_token"
+    },
+    {
+      "item": "ruinatlas:rusted_copper_dust"
+    },
+    {
+      "item": "ruinatlas:rusted_copper_dust"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ruinatlas:spirit_copper_bead"
+  }
+}

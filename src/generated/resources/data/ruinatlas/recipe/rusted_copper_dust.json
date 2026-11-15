@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ruinatlas:old_copper_token"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ruinatlas:rusted_copper_dust"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ruinatlas:old_copper_token"
+    },
+    {
+      "item": "ruinatlas:old_copper_token"
+    },
+    {
+      "item": "ruinatlas:old_copper_token"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ruinatlas:ancient_copper_pendant"
+  }
+}

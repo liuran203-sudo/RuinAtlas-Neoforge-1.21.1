@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mountain_tile": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:mountain_tile"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:mountain_step_scroll"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mountain_tile"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:mountain_step_scroll"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ruinatlas:tile_block"
+    },
+    {
+      "item": "ruinatlas:tile_block"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ruinatlas:mountain_tile"
+  }
+}

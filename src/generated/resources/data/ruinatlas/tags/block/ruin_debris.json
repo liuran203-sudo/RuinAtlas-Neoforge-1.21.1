@@ -1,0 +1,19 @@
+{
+  "values": [
+    "ruinatlas:broken_baluster",
+    "ruinatlas:broken_carved_paving",
+    "ruinatlas:broken_lattice",
+    "ruinatlas:broken_pillar_lower",
+    "ruinatlas:broken_pillar_upper",
+    "ruinatlas:broken_tile_pile",
+    "ruinatlas:broken_xun_wall",
+    "ruinatlas:bracket_shard_corner",
+    "ruinatlas:bracket_shard_side",
+    "ruinatlas:eave_board_shard",
+    "ruinatlas:market_rubble",
+    "ruinatlas:pillar_brace_shard",
+    "ruinatlas:ridge_ornament_shard",
+    "ruinatlas:road_rubble",
+    "ruinatlas:rubble_pile"
+  ]
+}

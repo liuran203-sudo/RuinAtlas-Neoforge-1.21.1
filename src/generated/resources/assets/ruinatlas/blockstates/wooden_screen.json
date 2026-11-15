@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ruinatlas:block/wooden_screen",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ruinatlas:block/wooden_screen"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/wooden_screen",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/wooden_screen",
+      "y": 270
+    }
+  }
+}

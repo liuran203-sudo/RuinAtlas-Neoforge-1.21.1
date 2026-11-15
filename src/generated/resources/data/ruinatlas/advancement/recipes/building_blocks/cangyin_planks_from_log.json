@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cangyin_log": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:cangyin_log"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:cangyin_planks_from_log"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cangyin_log"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:cangyin_planks_from_log"
+    ]
+  }
+}

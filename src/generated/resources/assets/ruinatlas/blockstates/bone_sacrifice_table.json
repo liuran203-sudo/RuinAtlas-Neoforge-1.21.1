@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ruinatlas:block/bone_sacrifice_table",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ruinatlas:block/bone_sacrifice_table"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/bone_sacrifice_table",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/bone_sacrifice_table",
+      "y": 270
+    }
+  }
+}

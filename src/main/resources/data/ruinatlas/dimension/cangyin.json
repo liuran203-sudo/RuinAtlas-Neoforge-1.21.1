@@ -1,0 +1,15 @@
+{
+  "type": "ruinatlas:cangyin",
+  "generator": {
+    "type": "ruinatlas:cangyin_terrain",
+    "biome_source": {
+      "type": "ruinatlas:cangyin_biomes",
+      "biomes": [
+        "ruinatlas:qingyuan_greenfield",
+        "ruinatlas:pinggao_old_town",
+        "ruinatlas:long_road_wasteway",
+        "ruinatlas:shenyu_ravine"
+      ]
+    }
+  }
+}

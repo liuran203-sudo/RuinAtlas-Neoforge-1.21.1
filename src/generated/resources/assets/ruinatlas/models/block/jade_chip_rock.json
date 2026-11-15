@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ruinatlas:block/jade_chip_rock"
+  }
+}

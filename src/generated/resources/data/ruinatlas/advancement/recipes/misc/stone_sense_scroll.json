@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_stele_rubbing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:stele_rubbing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:stone_sense_scroll"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_stele_rubbing"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:stone_sense_scroll"
+    ]
+  }
+}

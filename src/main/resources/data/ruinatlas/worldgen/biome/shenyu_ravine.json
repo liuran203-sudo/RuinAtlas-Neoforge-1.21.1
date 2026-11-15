@@ -1,0 +1,348 @@
+{
+  "has_precipitation": true,
+  "temperature": 0.6,
+  "downfall": 0.6,
+  "effects": {
+    "fog_color": 12047320,
+    "sky_color": 10273486,
+    "water_color": 5219232,
+    "water_fog_color": 3571839,
+    "particle": {
+      "options": {
+        "type": "ruinatlas:spirit_mist"
+      },
+      "probability": 0.015
+    },
+    "mood_sound": {
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    }
+  },
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [
+      {
+        "feature": {
+          "type": "ruinatlas:ruin_structure",
+          "config": {
+            "kind": "jade_shack"
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 14
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "ruinatlas:ruin_structure",
+          "config": {
+            "kind": "stream_stele"
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 10
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "ruinatlas:ruin_structure",
+          "config": {
+            "kind": "stream_altar"
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 22
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
+    [],
+    [
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "size": 12,
+            "discard_chance_on_air_exposure": 0.0,
+            "targets": [
+              {
+                "target": {
+                  "predicate_type": "minecraft:block_match",
+                  "block": "ruinatlas:xun_layer_rock"
+                },
+                "state": {
+                  "Name": "ruinatlas:eroded_stone"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 4
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "min_inclusive": {
+                "absolute": 14
+              },
+              "max_inclusive": {
+                "absolute": 52
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:ore",
+          "config": {
+            "size": 8,
+            "discard_chance_on_air_exposure": 0.0,
+            "targets": [
+              {
+                "target": {
+                  "predicate_type": "minecraft:block_match",
+                  "block": "ruinatlas:xun_layer_rock"
+                },
+                "state": {
+                  "Name": "ruinatlas:jade_chip_rock"
+                }
+              }
+            ]
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 3
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:height_range",
+            "height": {
+              "type": "minecraft:uniform",
+              "min_inclusive": {
+                "absolute": 16
+              },
+              "max_inclusive": {
+                "absolute": 46
+              }
+            }
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
+    [],
+    [],
+    [
+      {
+        "feature": {
+          "type": "ruinatlas:scatter_vegetation",
+          "config": {
+            "tries": 10,
+            "xz": 8,
+            "y_down": 2,
+            "y_up": 1,
+            "plants": [
+              {
+                "Name": "ruinatlas:xun_wild_grass"
+              },
+              {
+                "Name": "ruinatlas:wither_reed"
+              }
+            ],
+            "grounds": [
+              {
+                "Name": "ruinatlas:qingyuan_loam"
+              },
+              {
+                "Name": "ruinatlas:xun_soil"
+              },
+              {
+                "Name": "ruinatlas:settlement_subsoil"
+              },
+              {
+                "Name": "ruinatlas:road_rubble"
+              },
+              {
+                "Name": "ruinatlas:stream_silt"
+              },
+              {
+                "Name": "ruinatlas:farm_ruin_plot"
+              },
+              {
+                "Name": "ruinatlas:gloom_moss_block"
+              },
+              {
+                "Name": "ruinatlas:carved_stone_paving"
+              },
+              {
+                "Name": "ruinatlas:broken_carved_paving"
+              }
+            ],
+            "water_plant": {
+              "Name": "ruinatlas:xun_lily"
+            }
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 3
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "ruinatlas:scatter_vegetation",
+          "config": {
+            "tries": 14,
+            "xz": 6,
+            "y_down": 0,
+            "y_up": 0,
+            "plants": [],
+            "grounds": [
+              {
+                "Name": "ruinatlas:xun_layer_rock"
+              },
+              {
+                "Name": "ruinatlas:eroded_stone"
+              }
+            ],
+            "ground_replace": {
+              "Name": "ruinatlas:gloom_moss_block"
+            },
+            "replace_chance": 0.3
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:count",
+            "count": 2
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE_WG"
+          },
+          {
+            "type": "minecraft:biome"
+          }
+        ]
+      }
+    ],
+    []
+  ],
+  "spawn_costs": {},
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:drowned",
+        "weight": 12,
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft:skeleton",
+        "weight": 8,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ],
+    "creature": [],
+    "ambient": [
+      {
+        "type": "minecraft:bat",
+        "weight": 4,
+        "minCount": 1,
+        "maxCount": 4
+      }
+    ],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [
+      {
+        "type": "minecraft:squid",
+        "weight": 8,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ],
+    "water_ambient": [],
+    "misc": []
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ruinatlas:xun_layer_rock"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ruinatlas:blocks/xun_layer_rock"
+}

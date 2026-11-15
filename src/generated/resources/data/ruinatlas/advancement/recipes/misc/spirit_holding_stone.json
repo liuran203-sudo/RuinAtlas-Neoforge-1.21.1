@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_spirit_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:raw_spirit_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:spirit_holding_stone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_spirit_stone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:spirit_holding_stone"
+    ]
+  }
+}

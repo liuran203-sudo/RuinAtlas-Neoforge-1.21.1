@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ruinatlas:pale_jade_shard"
+    },
+    {
+      "item": "ruinatlas:pale_jade_shard"
+    },
+    {
+      "item": "ruinatlas:glow_spar"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ruinatlas:breath_jade"
+  }
+}

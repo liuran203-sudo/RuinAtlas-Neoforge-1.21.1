@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:polished_xun_stone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_xun_layer_rock": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:xun_layer_rock"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_xun_layer_rock"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:polished_xun_stone"
+    ]
+  }
+}

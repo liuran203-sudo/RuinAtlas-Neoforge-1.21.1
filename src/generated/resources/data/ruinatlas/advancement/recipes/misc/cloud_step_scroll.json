@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cloud_step_rubbing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:cloud_step_rubbing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:cloud_step_scroll"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cloud_step_rubbing"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:cloud_step_scroll"
+    ]
+  }
+}

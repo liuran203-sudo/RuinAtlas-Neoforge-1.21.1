@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:wind_blade_scroll"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wind_blade_rubbing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:wind_blade_rubbing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wind_blade_rubbing"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:wind_blade_scroll"
+    ]
+  }
+}

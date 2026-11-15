@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "ruinatlas:block/cangyin_log_top",
+    "side": "ruinatlas:block/cangyin_log_side"
+  }
+}

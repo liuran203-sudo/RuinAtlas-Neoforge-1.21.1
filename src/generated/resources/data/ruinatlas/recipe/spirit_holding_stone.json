@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ruinatlas:raw_spirit_stone"
+    },
+    {
+      "item": "ruinatlas:dried_petal"
+    },
+    {
+      "item": "ruinatlas:dried_petal"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ruinatlas:spirit_holding_stone"
+  }
+}

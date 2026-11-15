@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cangyin_bark": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:cangyin_bark"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:cangyin_planks_from_bark"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cangyin_bark"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:cangyin_planks_from_bark"
+    ]
+  }
+}

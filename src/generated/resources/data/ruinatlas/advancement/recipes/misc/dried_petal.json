@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_petal_thicket": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:petal_thicket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:dried_petal"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_petal_thicket"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:dried_petal"
+    ]
+  }
+}
