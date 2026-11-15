@@ -1,10 +1,12 @@
 package com.liuran.ruinatlas.worldgen;
 
+import com.liuran.ruinatlas.datagen.loot.RaChestLootTable;
 import com.liuran.ruinatlas.init.RaBlocks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
@@ -73,7 +75,9 @@ public class RuinStructureFeature extends Feature<RuinStructureFeature.Config> {
 		WorldGenLevel level = context.level();
 		RandomSource r = context.random();
 		BlockPos origin = context.origin();
-		BlockPos ground = new BlockPos(origin.getX(), origin.getY() - 1, origin.getZ());
+		// 先找一处“脚下有实心地面”的落点，避免整座残迹浮空或埋进石头
+		BlockPos ground = surface(level, origin);
+		foundation(level, ground, 4);
 
 		return switch (context.config().kind()) {
 			case FARM_HUT -> this.farmHut(level, ground, r);
@@ -91,7 +95,67 @@ public class RuinStructureFeature extends Feature<RuinStructureFeature.Config> {
 			case JADE_SHACK -> this.jadeShack(level, ground, r);
 			case STREAM_STELE -> this.streamStele(level, ground, r);
 			case STREAM_ALTAR -> this.streamAltar(level, ground, r);
+			case NICHE_SHRINE -> this.nicheShrine(level, ground, r);
+			case CONTRACT_PIT -> this.contractPit(level, ground, r);
+			case STAR_TERRACE -> this.starTerrace(level, ground, r);
+			case SUNKEN_RUIN -> this.sunkenRuin(level, seafloor(level, origin), r);
 		};
+	}
+
+	/** 从落点附近向下找“上方是空气、下方是实心地面”的一格 */
+	private static BlockPos surface(WorldGenLevel level, BlockPos origin) {
+		MutableBlockPos cursor = new MutableBlockPos(origin.getX(),
+				Math.min(origin.getY() + 8, level.getMaxBuildHeight() - 2), origin.getZ());
+
+		for (int i = 0; i < 20; i++) {
+			BlockState here = level.getBlockState(cursor);
+			BlockState below = level.getBlockState(cursor.below());
+
+			if (here.isAir() && !below.isAir() && below.getFluidState().isEmpty()) {
+				return cursor.immutable();
+			}
+
+			cursor.move(0, -1, 0);
+		}
+
+		return origin.below();
+	}
+
+	/** 水底落点：向下找第一块实心方块 */
+	private static BlockPos seafloor(WorldGenLevel level, BlockPos origin) {
+		MutableBlockPos cursor = origin.mutable();
+
+		for (int i = 0; i < 24; i++) {
+			BlockState here = level.getBlockState(cursor);
+
+			if (!here.isAir() && !here.getFluidState().isEmpty()) {
+				cursor.move(0, -1, 0);
+				continue;
+			}
+
+			if (!here.isAir() && here.getFluidState().isEmpty()) {
+				return cursor.above().immutable();
+			}
+
+			cursor.move(0, -1, 0);
+		}
+
+		return origin.below();
+	}
+
+	/** 地基：把落点下方 3 格内的空腔用墟土填实，减少悬空 */
+	private static void foundation(WorldGenLevel level, BlockPos c, int radius) {
+		for (int x = -radius; x <= radius; x++) {
+			for (int z = -radius; z <= radius; z++) {
+				for (int depth = 1; depth <= 3; depth++) {
+					BlockPos p = c.offset(x, -depth, z);
+
+					if (level.getBlockState(p).isAir()) {
+						put(level, p, blk(RaBlocks.XUN_SOIL));
+					}
+				}
+			}
+		}
 	}
 
 	private boolean farmHut(WorldGenLevel level, BlockPos c, RandomSource r) {
@@ -466,6 +530,145 @@ public class RuinStructureFeature extends Feature<RuinStructureFeature.Config> {
 		return true;
 	}
 
+	private boolean nicheShrine(WorldGenLevel level, BlockPos c, RandomSource r) {
+		int w = 7;
+		int d = 5;
+		BlockPos corner = c.offset(-w / 2, 0, -d / 2);
+		fill(level, corner, w, 1, d, blk(RaBlocks.CARVED_STONE_PAVING));
+
+		for (int x = 0; x < w; x++) {
+			for (int z = 0; z < d; z++) {
+				boolean edge = x == 0 || z == 0 || x == w - 1 || z == d - 1;
+
+				if (!edge) {
+					continue;
+				}
+
+				if (x == w / 2 && z == d - 1) {
+					put(level, corner.offset(x, 1, z), AIR);
+					continue;
+				}
+
+				Sel brick = r.nextBoolean() ? blk(RaBlocks.XUN_BRICK) : blk(RaBlocks.WEATHERED_XUN_BRICK);
+				put(level, corner.offset(x, 1, z), brick);
+				if (r.nextDouble() < 0.6) {
+					put(level, corner.offset(x, 2, z), brick);
+				}
+			}
+		}
+
+		// 四角柱与残檐
+		put(level, corner, blk(RaBlocks.CORNER_QUOIN));
+		put(level, corner.offset(w - 1, 1, 0), blk(RaBlocks.CORNER_QUOIN));
+		put(level, corner.offset(0, 1, d - 1), blk(RaBlocks.CORNER_QUOIN));
+		chance(level, corner.offset(w - 1, 2, d - 1), blk(RaBlocks.RIDGE_ORNAMENT_SHARD), 0.5, r);
+		chance(level, corner.offset(w / 2, 3, 2), blk(RaBlocks.RIDGE_TILE), 0.6, r);
+
+		// 龛前的供台与龛本体
+		put(level, corner.offset(w / 2, 1, 2), blk(RaBlocks.STONE_PLINTH));
+		put(level, corner.offset(w / 2, 2, 2), blk(RaBlocks.XUN_NICHE));
+		put(level, corner.offset(w / 2, 1, 1), blk(RaBlocks.HALF_OFFERING_TABLE));
+		chance(level, corner.offset(1, 1, 1), blk(RaBlocks.RUIN_LAMP_BASE), 0.55, r);
+		chance(level, corner.offset(1, 1, 3), blk(RaBlocks.RUBBING_STELE), 0.35, r);
+		chance(level, corner.offset(w - 2, 1, 1), blk(RaBlocks.SEALED_STONE_CASKET), 0.45, r);
+		chance(level, corner.offset(w - 2, 1, 3), blk(RaBlocks.EMPTY_CERAMIC_URN), 0.4, r);
+		chance(level, corner.offset(w / 2, 1, 4), blk(RaBlocks.BROKEN_BALUSTER), 0.4, r);
+
+		if (r.nextDouble() < 0.5) {
+			chestLoot(level, r, corner.offset(1, 1, 4), RuinDimensions.CELLAR_CHEST);
+		}
+
+		return true;
+	}
+
+	private boolean contractPit(WorldGenLevel level, BlockPos c, RandomSource r) {
+		// 半埋的坑：刮掉地表，铺一层墟土与碎石，中间放石匣
+		fill(level, c.offset(-2, 0, -2), 5, 1, 5, blk(RaBlocks.STREAM_SILT));
+		fill(level, c.offset(-1, 0, -1), 3, 1, 3, blk(RaBlocks.RUBBLE_PILE));
+
+		for (int x = -2; x <= 2; x++) {
+			for (int z = -2; z <= 2; z++) {
+				if (Math.abs(x) == 2 || Math.abs(z) == 2) {
+					chance(level, c.offset(x, 1, z), blk(RaBlocks.BROKEN_CARVED_PAVING), 0.35, r);
+				}
+			}
+		}
+
+		put(level, c.offset(0, 1, 0), blk(RaBlocks.SEALED_STONE_CASKET));
+		chance(level, c.offset(1, 1, 1), blk(RaBlocks.BROKEN_PILLAR_LOWER), 0.4, r);
+		chance(level, c.offset(-1, 1, 1), blk(RaBlocks.RUBBLE_PILE), 0.5, r);
+		chance(level, c.offset(1, 1, -1), blk(RaBlocks.STONE_PLINTH), 0.35, r);
+		chance(level, c.offset(0, 2, -2), blk(RaBlocks.WITHER_REED), 0.35, r);
+		chance(level, c.offset(2, 1, 0), blk(RaBlocks.SUNKEN_STELE), 0.25, r);
+		return true;
+	}
+
+	private boolean starTerrace(WorldGenLevel level, BlockPos c, RandomSource r) {
+		int w = 7;
+		int d = 7;
+		BlockPos corner = c.offset(-w / 2, 0, -d / 2);
+		fill(level, corner, w, 1, d, blk(RaBlocks.CARVED_STONE_PAVING));
+		fill(level, corner.offset(1, 1, 1), w - 2, 1, d - 2, blk(RaBlocks.CARVED_SLAB));
+
+		// 四角残柱
+		for (int i = 0; i < 4; i++) {
+			int x = i % 2 == 0 ? 0 : w - 1;
+			int z = i < 2 ? 0 : d - 1;
+			put(level, corner.offset(x, 1, z), blk(RaBlocks.BROKEN_PILLAR_LOWER));
+			if (r.nextDouble() < 0.5) {
+				put(level, corner.offset(x, 2, z), blk(RaBlocks.BROKEN_PILLAR_UPPER));
+			}
+		}
+
+		// 台心星纹基座与叙事碑
+		put(level, corner.offset(w / 2, 1, d / 2), blk(RaBlocks.STAR_CARVED_BASE));
+		put(level, corner.offset(w / 2, 2, d / 2), blk(RaBlocks.STORY_STELE));
+		chance(level, corner.offset(w / 2, 1, 1), blk(RaBlocks.HALF_OFFERING_TABLE), 0.45, r);
+		chance(level, corner.offset(1, 1, d / 2), blk(RaBlocks.RUIN_LAMP_BASE), 0.4, r);
+		chance(level, corner.offset(w - 2, 1, d / 2), blk(RaBlocks.RUBBING_STELE), 0.35, r);
+		chance(level, corner.offset(w / 2 + 1, 1, d - 2), blk(RaBlocks.ROTTEN_BEAM), 0.4, r);
+		chance(level, corner.offset(w / 2 - 2, 2, d / 2 + 1), blk(RaBlocks.BROKEN_BALUSTER), 0.4, r);
+
+		// 台阶与散落的观星残件
+		for (int x = 1; x < w - 1; x += 2) {
+			put(level, corner.offset(x, 0, -1), blk(RaBlocks.RUBBLE_STEP));
+		}
+
+		if (r.nextDouble() < 0.6) {
+			chestLoot(level, r, corner.offset(w / 2, 1, 1), RuinDimensions.CELLAR_CHEST);
+		}
+
+		return true;
+	}
+
+	private boolean sunkenRuin(WorldGenLevel level, BlockPos c, RandomSource r) {
+		int w = 5;
+		int d = 5;
+		BlockPos corner = c.offset(-2, 0, -2);
+		fill(level, corner, w, 1, d, blk(RaBlocks.CARVED_STONE_PAVING));
+
+		for (int x = 0; x < w; x++) {
+			for (int z = 0; z < d; z++) {
+				if (x == 0 || z == 0 || x == w - 1 || z == d - 1) {
+					Sel brick = r.nextBoolean() ? blk(RaBlocks.WATERLOGGED_XUN_BRICK) : blk(RaBlocks.XUN_BRICK);
+					put(level, corner.offset(x, 1, z), brick);
+					if (r.nextDouble() < 0.55) {
+						put(level, corner.offset(x, 2, z), brick);
+					}
+				}
+			}
+		}
+
+		put(level, corner.offset(2, 1, 1), blk(RaBlocks.SUNKEN_STELE));
+		put(level, corner.offset(1, 1, 2), blk(RaBlocks.EMPTY_CERAMIC_URN));
+		chance(level, corner.offset(3, 1, 2), blk(RaBlocks.SEALED_CERAMIC_URN), 0.45, r);
+		chance(level, corner.offset(2, 1, 3), blk(RaBlocks.XUN_LILY), 0.4, r);
+		chance(level, corner.offset(0, 2, 2), blk(RaBlocks.BROKEN_PILLAR_LOWER), 0.5, r);
+		chance(level, corner.offset(4, 2, 2), blk(RaBlocks.BROKEN_XUN_WALL), 0.5, r);
+		chestLoot(level, r, corner.offset(2, 1, 2), RaChestLootTable.SUNKEN_RUIN);
+		return true;
+	}
+
 	private record Air() implements Sel {
 	}
 
@@ -499,7 +702,11 @@ public class RuinStructureFeature extends Feature<RuinStructureFeature.Config> {
 		BURIED_NICHE("buried_niche"),
 		JADE_SHACK("jade_shack"),
 		STREAM_STELE("stream_stele"),
-		STREAM_ALTAR("stream_altar");
+		STREAM_ALTAR("stream_altar"),
+		NICHE_SHRINE("niche_shrine"),
+		CONTRACT_PIT("contract_pit"),
+		STAR_TERRACE("star_terrace"),
+		SUNKEN_RUIN("sunken_ruin");
 
 		public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 		private final String name;

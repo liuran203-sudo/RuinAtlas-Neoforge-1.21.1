@@ -22,4 +22,9 @@ public class RuinShapeBlock extends Block {
 	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return this.shape;
 	}
+
+	/** 供数据生成读取碰撞箱，用来生成占位模型 */
+	public VoxelShape getRuinShape() {
+		return this.shape;
+	}
 }

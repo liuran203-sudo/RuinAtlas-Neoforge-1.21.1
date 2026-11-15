@@ -29,7 +29,8 @@ public final class RaCasting {
 		NOT_LEARNED,
 		NO_SPIRIT,
 		COOLDOWN,
-		FAILED
+		FAILED,
+		SILENCED
 	}
 
 	private RaCasting() {
@@ -95,6 +96,10 @@ public final class RaCasting {
 
 		long now = player.level().getGameTime();
 
+		if (isSuppressed(player, now)) {
+			return Result.SILENCED;
+		}
+
 		if (RaAttachments.getCooldownReady(player, path) > now) {
 			return Result.COOLDOWN;
 		}
@@ -127,7 +132,69 @@ public final class RaCasting {
 
 		long cooldown = Math.round(info.cooldown() * (bead ? BEAD_COOLDOWN_FACTOR : 1.0D));
 		RaAttachments.setCooldownReady(player, path, now + cooldown);
+		tryMark(player, now, bead);
+
 		return Result.SUCCESS;
+	}
+
+	/**
+	 * 凝痕模式：持珠施术时，有概率让当前所指的契法契痕再进一分
+	 * <p>内部冷却 30 秒，避免连续触发。
+	 */
+	private static void tryMark(ServerPlayer player, long now, boolean bead) {
+		if (!bead || !"mark".equals(RaAttachments.getBeadMode(player)) || now < RaAttachments.getMarkReady(player)) {
+			return;
+		}
+
+		if (player.getRandom().nextFloat() >= 0.25F) {
+			return;
+		}
+
+		String path = currentPath(player);
+
+		if (path.isEmpty()) {
+			return;
+		}
+
+		ResourceLocation id = ResourceLocation.fromNamespaceAndPath(MODID, path);
+		int rank = RaAttachments.getRank(player, id);
+
+		if (rank >= 3) {
+			return;
+		}
+
+		int newRank = RaAttachments.raiseRank(player, id);
+		RaAttachments.setMarkReady(player, now + 600L);
+		player.displayClientMessage(Component.translatable("technique." + MODID + ".mark.trigger",
+				Component.translatable("technique." + MODID + "." + path),
+				Component.translatable("technique." + MODID + ".rank." + newRank)), true);
+	}
+
+	/** 是否落在别人的静封领域内 */
+	private static boolean isSuppressed(ServerPlayer player, long now) {
+		if (!(player.level() instanceof ServerLevel level)) {
+			return false;
+		}
+
+		for (ServerPlayer other : level.players()) {
+			if (other == player) {
+				continue;
+			}
+
+			long until = RaAttachments.getDomainUntil(other);
+
+			if (until <= now) {
+				continue;
+			}
+
+			int radius = RaAttachments.getDomainRadius(other);
+
+			if (radius > 0 && RaAttachments.getDomainCenter(other).distSqr(player.blockPosition()) <= (double) radius * radius) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/** 施放并把结果告知玩家 */
@@ -152,6 +219,8 @@ public final class RaCasting {
 			case COOLDOWN -> player.displayClientMessage(Component.translatable("technique." + MODID + ".cast.cooldown",
 					Component.translatable(info.nameKey())), true);
 			case FAILED -> player.displayClientMessage(Component.translatable("technique." + MODID + ".cast.failed",
+					Component.translatable(info.nameKey())), true);
+			case SILENCED -> player.displayClientMessage(Component.translatable("technique." + MODID + ".cast.silenced",
 					Component.translatable(info.nameKey())), true);
 			default -> {
 			}

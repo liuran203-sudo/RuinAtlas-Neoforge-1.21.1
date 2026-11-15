@@ -64,6 +64,7 @@ public class RuinPlantBlock extends Block {
 				|| ground.is(Blocks.MUD)
 				|| ground.is(Blocks.MOSS_BLOCK)
 				|| ground.is(Blocks.CLAY)
+				|| ground.is(Blocks.SAND)
 				|| ground.is(RaBlocks.QINGYUAN_LOAM.get())
 				|| ground.is(RaBlocks.XUN_SOIL.get())
 				|| ground.is(RaBlocks.SETTLEMENT_SUBSOIL.get())

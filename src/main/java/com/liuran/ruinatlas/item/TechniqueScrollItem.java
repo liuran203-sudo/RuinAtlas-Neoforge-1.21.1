@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -60,27 +61,45 @@ public class TechniqueScrollItem extends Item {
 		}
 
 		int rank = RaAttachments.getRank(player, info.id());
+		ResourceLocation targetId = info.id();
+		Component targetName = name;
+
+		// 守墟碎玉锁法之后，研读只往锁定那一门上添契痕
+		String locked = RaAttachments.getLockedTechnique(player);
+
+		if (!locked.isEmpty()) {
+			RaTechniqueInfo lockInfo = RaTechniqueRegistry.byId(locked);
+
+			if (lockInfo != null && RaAttachments.hasLearned(player, lockInfo.id())) {
+				targetId = lockInfo.id();
+				targetName = Component.translatable(lockInfo.nameKey());
+				rank = RaAttachments.getRank(player, targetId);
+			}
+		}
 
 		if (rank >= 3) {
-			player.displayClientMessage(Component.translatable("item." + MODID + ".technique_scroll.full"), true);
+			player.displayClientMessage(Component.translatable("item." + MODID + ".technique_scroll.full",
+					targetName), true);
 			return InteractionResultHolder.fail(stack);
 		}
 
-		if (!RaAttachments.spendSpirit(player, 3)) {
+		int cost = RaAttachments.isSpiritTide(player, level.getGameTime()) ? 2 : 3;
+
+		if (!RaAttachments.spendSpirit(player, cost)) {
 			player.displayClientMessage(Component.translatable("item." + MODID + ".technique_scroll.no_spirit"), true);
 			return InteractionResultHolder.fail(stack);
 		}
 
-		int newRank = RaAttachments.raiseRank(player, info.id());
+		int newRank = RaAttachments.raiseRank(player, targetId);
 		level.playSound(null, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS,
 				0.7F, 1.2F + newRank * 0.1F);
 
 		if (newRank >= 3) {
 			stack.shrink(1);
-			player.displayClientMessage(Component.translatable("item." + MODID + ".technique_scroll.burnt", name), true);
+			player.displayClientMessage(Component.translatable("item." + MODID + ".technique_scroll.burnt", targetName), true);
 		} else {
 			player.displayClientMessage(Component.translatable("item." + MODID + ".technique_scroll.deepen",
-					name, Component.translatable("technique." + MODID + ".rank." + newRank)), true);
+					targetName, Component.translatable("technique." + MODID + ".rank." + newRank)), true);
 		}
 
 		return InteractionResultHolder.sidedSuccess(stack, false);

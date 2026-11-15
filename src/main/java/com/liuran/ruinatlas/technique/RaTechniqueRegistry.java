@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -67,6 +68,8 @@ public final class RaTechniqueRegistry {
 		register(RaItems.CLEANSE_SCROLL.get(), "cleanse", 20, 60, SCOPE_WARD, RaTechniqueRegistry::cleanse);
 		register(RaItems.STONE_SENSE_SCROLL.get(), "stone_sense", 15, 40, SCOPE_SENSE, RaTechniqueRegistry::stoneSense);
 		register(RaItems.SPIRIT_WARD_SCROLL.get(), "spirit_ward", 30, 90, SCOPE_WARD, RaTechniqueRegistry::spiritWard);
+		register(RaItems.GATHER_RUINS_SCROLL.get(), "gather_ruins", 15, 45, SCOPE_MOVE, RaTechniqueRegistry::gatherRuins);
+		register(RaItems.STILL_SEAL_SCROLL.get(), "still_seal", 30, 120, SCOPE_WARD, RaTechniqueRegistry::stillSeal);
 	}
 
 	private static void register(Item scroll, String id, int spiritCost, int cooldown, String scope,
@@ -91,6 +94,23 @@ public final class RaTechniqueRegistry {
 		return new ArrayList<>(BY_ID.values());
 	}
 
+	/** 某道契法对应的契卷物品；残页合成时用 */
+	public static Item scrollFor(String path) {
+		RaTechniqueInfo info = BY_ID.get(path);
+
+		if (info == null) {
+			return null;
+		}
+
+		for (Map.Entry<Item, RaTechniqueInfo> entry : BY_SCROLL.entrySet()) {
+			if (entry.getValue() == info) {
+				return entry.getKey();
+			}
+		}
+
+		return null;
+	}
+
 	// ===== 具体契法 =====
 
 	/** 云步：借流云之息挪移，契痕越深，踏得越远、云气越浓 */
@@ -98,6 +118,7 @@ public final class RaTechniqueRegistry {
 		Direction dir = player.getDirection();
 		BlockPos base = player.blockPosition();
 		int reach = 5 + rank * 2;
+		Vec3 from = player.position();
 
 		for (int distance = reach; distance >= 1; distance--) {
 			BlockPos target = base.relative(dir, distance);
@@ -108,6 +129,9 @@ public final class RaTechniqueRegistry {
 				burst(level, player.getX(), player.getY() + 0.1, player.getZ(), 4 + rank * 2);
 				player.teleportTo(level, target.getX() + 0.5, target.getY(), target.getZ() + 0.5,
 						player.getYRot(), player.getXRot());
+				// 云步落地留下的短暂灵息痕迹：起点到落点一串微光
+				glowLine(level, from.add(0.0, 0.15, 0.0),
+						new Vec3(target.getX() + 0.5, target.getY() + 0.15, target.getZ() + 0.5), 0.55 + rank * 0.1);
 				burst(level, target.getX() + 0.5, target.getY() + 0.1, target.getZ() + 0.5, 6 + rank * 3);
 				return true;
 			}
@@ -311,7 +335,73 @@ public final class RaTechniqueRegistry {
 		RaAttachments.setWardUntil(player, level.getGameTime() + 600L + rank * 200L);
 		burst(level, player.getX(), player.getY() + player.getBbHeight() * 0.6, player.getZ(), 18 + rank * 6);
 		ring(level, player, 1.2 + rank * 0.2, 10 + rank * 6);
+		level.sendParticles((ParticleOptions) RaParticleTypes.SPIRIT_GLOW.get(),
+				player.getX(), player.getY() + player.getBbHeight() * 0.6, player.getZ(),
+				24 + rank * 12, 0.9 + rank * 0.2, 0.25, 0.9 + rank * 0.2, 0.03);
 		return true;
+	}
+
+	/** 敛墟：短暂吸附附近掉落物，古墟遗物优先；契满范围大增 */
+	private static boolean gatherRuins(ServerLevel level, ServerPlayer player, int rank) {
+		double radius = 8.0 + rank * 4.0;
+		List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(radius),
+				item -> item.isAlive() && !item.getItem().isEmpty());
+
+		if (items.isEmpty()) {
+			return false;
+		}
+
+		items.sort(Comparator.<ItemEntity>comparingInt(item -> isRelic(item.getItem()) ? 0 : 1)
+				.thenComparingDouble(item -> item.distanceToSqr(player)));
+
+		int limit = 18 + rank * 6;
+		int pulled = 0;
+
+		for (ItemEntity item : items) {
+			if (pulled >= limit) {
+				break;
+			}
+
+			Vec3 target = player.position().add(0.0, 0.8, 0.0);
+			Vec3 direction = target.subtract(item.position());
+
+			if (direction.lengthSqr() < 1.0E-4) {
+				continue;
+			}
+
+			double speed = 0.24 + rank * 0.12 + (isRelic(item.getItem()) ? 0.1 : 0.0);
+			item.setDeltaMovement(direction.normalize().scale(speed).add(0.0, 0.12, 0.0));
+			item.hasImpulse = true;
+			pulled++;
+		}
+
+		burst(level, player.getX(), player.getY() + 0.6, player.getZ(), 12 + rank * 6);
+		ring(level, player, 1.5 + rank * 0.4, 14 + rank * 6);
+		return pulled > 0;
+	}
+
+	/** 静封：立一片静域，压住域内他人施术；契满静域时间显著拉长 */
+	private static boolean stillSeal(ServerLevel level, ServerPlayer player, int rank) {
+		int radius = 8 + rank * 3;
+		long duration = 1200L + rank * 600L;
+		RaAttachments.setDomain(player, player.blockPosition(), radius, level.getGameTime() + duration);
+		burst(level, player.getX(), player.getY() + 0.8, player.getZ(), 20 + rank * 8);
+		ring(level, player, radius * 0.6, 20 + rank * 10);
+		level.sendParticles((ParticleOptions) RaParticleTypes.SPIRIT_MIST.get(),
+				player.getX(), player.getY() + 1.2, player.getZ(),
+				40 + rank * 20, radius * 0.7, 0.6, radius * 0.7, 0.0);
+		return true;
+	}
+
+	/** 古墟遗物：吸取时优先 */
+	private static boolean isRelic(ItemStack stack) {
+		return stack.is(RaItems.STELE_RUBBING.get())
+				|| stack.is(RaItems.CONTRACT_FRAGMENT.get())
+				|| stack.is(RaItems.OLD_COPPER_TOKEN.get())
+				|| stack.is(RaItems.PALE_JADE_SHARD.get())
+				|| stack.is(RaItems.WARD_JADE_SHARD.get())
+				|| stack.is(RaItems.SPIRIT_HOLDING_STONE.get())
+				|| stack.is(RaItems.XU_DUST_POUCH.get());
 	}
 
 	private static boolean isSpiritMark(BlockState state) {

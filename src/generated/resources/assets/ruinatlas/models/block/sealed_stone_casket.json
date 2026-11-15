@@ -1,0 +1,40 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        }
+      },
+      "from": [
+        0.125,
+        0,
+        0.125
+      ],
+      "to": [
+        0.875,
+        0.625,
+        0.875
+      ]
+    }
+  ],
+  "textures": {
+    "all": "ruinatlas:block/sealed_stone_casket",
+    "particle": "ruinatlas:block/sealed_stone_casket"
+  }
+}

@@ -1,10 +1,12 @@
 package com.liuran.ruinatlas.client;
 
+import com.liuran.ruinatlas.init.RaEntities;
 import com.liuran.ruinatlas.init.RaParticleTypes;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 import static com.liuran.ruinatlas.RuinAtlas.MODID;
@@ -27,5 +29,10 @@ public final class RuinAtlasClient {
 				RaParticleTypes.SPIRIT_GLOW.get(),
 				sprites -> (type, level, x, y, z, dx, dy, dz) -> new SpiritGlowParticle(level, x, y, z, sprites)
 		);
+	}
+
+	@SubscribeEvent
+	public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerEntityRenderer(RaEntities.XU_SHADOW.get(), XuShadowRenderer::new);
 	}
 }

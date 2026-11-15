@@ -104,7 +104,8 @@ public class GateSteleBlock extends RotatableRuinBlock {
 					if (Math.max(Math.abs(dx), Math.abs(dz)) == r) {
 						int px = x + dx;
 						int pz = z + dz;
-						if (surfaceY(level, px, pz) > level.getChunkSource().getGenerator().getSeaLevel() + 1) {
+						if (surfaceY(level, px, pz) > level.getChunkSource().getGenerator().getSeaLevel() + 1
+								&& isClearLanding(level, px, pz)) {
 							return new BlockPos(px, 0, pz);
 						}
 					}
@@ -122,5 +123,21 @@ public class GateSteleBlock extends RotatableRuinBlock {
 		}
 		int y = chunk.getHeight(Types.OCEAN_FLOOR, x & 15, z & 15);
 		return Math.max(y + 1, level.getMinBuildHeight());
+	}
+
+	/** 落点上方两格要能站人、脚下要有实心地面，尽量少把人塞进石头或水里 */
+	private static boolean isClearLanding(ServerLevelAccessor level, int x, int z) {
+		int y = surfaceY(level, x, z);
+		BlockPos feet = new BlockPos(x, y, z);
+		BlockPos head = feet.above();
+		BlockPos below = feet.below();
+
+		if (!level.getFluidState(feet).isEmpty() || !level.getFluidState(head).isEmpty()) {
+			return false;
+		}
+
+		return level.getBlockState(feet).getCollisionShape(level, feet).isEmpty()
+				&& level.getBlockState(head).getCollisionShape(level, head).isEmpty()
+				&& !level.getBlockState(below).getCollisionShape(level, below).isEmpty();
 	}
 }

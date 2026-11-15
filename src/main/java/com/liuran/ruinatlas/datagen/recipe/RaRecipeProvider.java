@@ -255,5 +255,45 @@ public class RaRecipeProvider extends net.minecraft.data.recipes.RecipeProvider 
 						RaBlocks.CRACKED_XUN_BRICK.get(), 0.1F, 200)
 				.unlockedBy("has_xun_brick", has(RaBlocks.XUN_BRICK.get()))
 				.save(recipeOutput, ResourceLocation.fromNamespaceAndPath(MODID, "cracked_xun_brick_from_smelting"));
+
+		// 墟砖 ×6 → 墟砖栅栏 ×6
+		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, RaBlocks.XUN_BRICK_FENCE.get(), 6)
+				.pattern("XXX")
+				.pattern("XXX")
+				.define('X', RaBlocks.XUN_BRICK.get())
+				.unlockedBy("has_xun_brick", has(RaBlocks.XUN_BRICK.get()))
+				.save(recipeOutput);
+
+		// 磨光墟石 ×4 → 刻纹石板 ×4
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RaBlocks.CARVED_SLAB.get(), 4)
+				.pattern("XX")
+				.pattern("XX")
+				.define('X', RaBlocks.POLISHED_XUN_STONE.get())
+				.unlockedBy("has_polished_xun_stone", has(RaBlocks.POLISHED_XUN_STONE.get()))
+				.save(recipeOutput);
+
+		// 碎石堆 ×3 → 碎石台阶 ×6
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, RaBlocks.RUBBLE_STEP.get(), 6)
+				.pattern("XXX")
+				.define('X', RaBlocks.RUBBLE_PILE.get())
+				.unlockedBy("has_rubble_pile", has(RaBlocks.RUBBLE_PILE.get()))
+				.save(recipeOutput);
+
+		// 石础 + 萤晶 → 残灯基座
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, RaBlocks.RUIN_LAMP_BASE.get())
+				.requires(RaBlocks.STONE_PLINTH.get())
+				.requires(RaItems.GLOW_SPAR.get())
+				.unlockedBy("has_stone_plinth", has(RaBlocks.STONE_PLINTH.get()))
+				.save(recipeOutput);
+
+		// 磨光墟石 ×3 + 灵息原石 → 灵息引石
+		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, RaBlocks.SPIRIT_CONDUIT.get())
+				.pattern("SSS")
+				.pattern("SRS")
+				.pattern("SSS")
+				.define('S', RaBlocks.POLISHED_XUN_STONE.get())
+				.define('R', RaItems.RAW_SPIRIT_STONE.get())
+				.unlockedBy("has_raw_spirit_stone", has(RaItems.RAW_SPIRIT_STONE.get()))
+				.save(recipeOutput);
 	}
 }

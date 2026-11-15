@@ -1,0 +1,210 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:air",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ruinatlas:ancient_copper_pendant"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ruinatlas:old_copper_token",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ruinatlas:xu_dust_pouch"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "chance": 0.5,
+          "condition": "minecraft:random_chance"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "cloud_step"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "wind_blade"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "ward_evil"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "hold_breath"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "listen_wind"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "guide_light"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "mountain_step"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "cleanse"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "stone_sense"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "spirit_ward"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "gather_ruins"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:custom_data": {
+                  "technique": "still_seal"
+                }
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "ruinatlas:contract_fragment"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ruinatlas:blocks/sealed_stone_casket"
+}

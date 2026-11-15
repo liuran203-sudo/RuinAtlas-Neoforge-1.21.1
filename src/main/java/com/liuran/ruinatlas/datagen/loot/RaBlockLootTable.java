@@ -3,12 +3,17 @@ package com.liuran.ruinatlas.datagen.loot;
 import java.util.Set;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -35,6 +40,25 @@ public class RaBlockLootTable extends BlockLootSubProvider {
 		// 台阶
 		add(RaBlocks.STEP_STONE.get(), createSlabItemTable(RaBlocks.STEP_STONE.get()));
 		add(RaBlocks.CARVED_STEP.get(), createSlabItemTable(RaBlocks.CARVED_STEP.get()));
+		add(RaBlocks.RUBBLE_STEP.get(), createSlabItemTable(RaBlocks.RUBBLE_STEP.get()));
+
+		// 封石匣：一半是空匣，一半藏着残页、铜佩或墟尘
+		LootTable.Builder casket = LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(Items.AIR).setWeight(4))
+						.add(LootItem.lootTableItem(RaItems.ANCIENT_COPPER_PENDANT.get()).setWeight(1))
+						.add(LootItem.lootTableItem(RaItems.OLD_COPPER_TOKEN.get()).setWeight(2))
+						.add(LootItem.lootTableItem(RaItems.XU_DUST_POUCH.get()).setWeight(1)));
+		LootPool.Builder casketFragments = LootPool.lootPool()
+				.setRolls(ConstantValue.exactly(1))
+				.when(LootItemRandomChanceCondition.randomChance(0.5F));
+
+		for (String path : RaChestLootTable.TECHNIQUE_PATHS) {
+			casketFragments.add(fragment(path).setWeight(1));
+		}
+
+		add(RaBlocks.SEALED_STONE_CASKET.get(), casket.withPool(casketFragments));
 
 		//region 特殊掉落
 		// 蚀纹岩：自身 + 25% 驭灵石原石
@@ -129,5 +153,12 @@ public class RaBlockLootTable extends BlockLootSubProvider {
 		return LootPool.lootPool()
 				.setRolls(ConstantValue.exactly(1))
 				.add(LootItem.lootTableItem(item));
+	}
+
+	private static LootItem.Builder<?> fragment(String path) {
+		CompoundTag tag = new CompoundTag();
+		tag.putString("technique", path);
+		return LootItem.lootTableItem(RaItems.CONTRACT_FRAGMENT.get())
+				.apply(SetComponentsFunction.setComponent(DataComponents.CUSTOM_DATA, CustomData.of(tag)));
 	}
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ruinatlas:block/rotten_beam",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ruinatlas:block/rotten_beam"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/rotten_beam",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/rotten_beam",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_stone_plinth": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ruinatlas:stone_plinth"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ruinatlas:ruin_lamp_base"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_stone_plinth"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ruinatlas:ruin_lamp_base"
+    ]
+  }
+}

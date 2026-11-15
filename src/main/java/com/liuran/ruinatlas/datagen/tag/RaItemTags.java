@@ -32,5 +32,6 @@ public class RaItemTags extends ItemTagsProvider {
 		tag(ItemTags.LOGS).add(RaItems.CANGYIN_LOG.get(), RaItems.CANGYIN_BARK.get());
 		tag(ItemTags.LOGS_THAT_BURN).add(RaItems.CANGYIN_LOG.get(), RaItems.CANGYIN_BARK.get());
 		tag(ItemTags.PLANKS).add(RaItems.CANGYIN_PLANKS.get());
+		tag(ItemTags.FENCES).add(RaItems.XUN_BRICK_FENCE.get());
 	}
 }

@@ -1,10 +1,14 @@
 package com.liuran.ruinatlas.init;
 
+import com.liuran.ruinatlas.item.ContractFragmentItem;
 import com.liuran.ruinatlas.item.CrushCharmItem;
 import com.liuran.ruinatlas.item.HempRobeItem;
 import com.liuran.ruinatlas.item.ReusableTalismanItem;
 import com.liuran.ruinatlas.item.SpiritCopperBeadItem;
+import com.liuran.ruinatlas.item.SpiritMedicLadleItem;
 import com.liuran.ruinatlas.item.TechniqueScrollItem;
+import com.liuran.ruinatlas.item.WardJadeShardItem;
+import com.liuran.ruinatlas.item.XuDustPouchItem;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -16,6 +20,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -231,6 +236,44 @@ public class RaItems {
 			.build();
 	public static final DeferredItem<Item> HEMP_ROBE = ITEM_REGISTER.registerItem(
 			"hemp_robe", HempRobeItem::new, new Properties().stacksTo(1).durability(90).attributes(HEMP_ROBE_MODIFIERS)
+	);
+
+	// ===== 沉泽墟新陈设与遗物 =====
+	public static final DeferredItem<Item> RUIN_LAMP_BASE = blockItem("ruin_lamp_base", RaBlocks.RUIN_LAMP_BASE);
+	public static final DeferredItem<Item> RUBBLE_STEP = blockItem("rubble_step", RaBlocks.RUBBLE_STEP);
+	public static final DeferredItem<Item> CARVED_SLAB = blockItem("carved_slab", RaBlocks.CARVED_SLAB);
+	public static final DeferredItem<Item> ROTTEN_BEAM = blockItem("rotten_beam", RaBlocks.ROTTEN_BEAM);
+	public static final DeferredItem<Item> SEALED_STONE_CASKET = blockItem("sealed_stone_casket", RaBlocks.SEALED_STONE_CASKET);
+	public static final DeferredItem<Item> XUN_BRICK_FENCE = blockItem("xun_brick_fence", RaBlocks.XUN_BRICK_FENCE);
+	public static final DeferredItem<Item> HALF_OFFERING_TABLE = blockItem("half_offering_table", RaBlocks.HALF_OFFERING_TABLE);
+	public static final DeferredItem<Item> SPIRIT_CONDUIT = blockItem("spirit_conduit", RaBlocks.SPIRIT_CONDUIT);
+	public static final DeferredItem<Item> RUBBING_STELE = blockItem("rubbing_stele", RaBlocks.RUBBING_STELE);
+	public static final DeferredItem<Item> STORY_STELE = blockItem("story_stele", RaBlocks.STORY_STELE);
+	public static final DeferredItem<Item> SUNKEN_STELE = blockItem("sunken_stele", RaBlocks.SUNKEN_STELE);
+
+	public static final DeferredItem<Item> CONTRACT_FRAGMENT = ITEM_REGISTER.registerItem(
+			"contract_fragment", ContractFragmentItem::new, new Properties().stacksTo(16)
+	);
+	public static final DeferredItem<Item> XU_DUST_POUCH = ITEM_REGISTER.registerItem(
+			"xu_dust_pouch", XuDustPouchItem::new, new Properties().stacksTo(16)
+	);
+	public static final DeferredItem<Item> WARD_JADE_SHARD = ITEM_REGISTER.registerItem(
+			"ward_jade_shard", WardJadeShardItem::new, new Properties().stacksTo(16)
+	);
+	public static final DeferredItem<Item> SPIRIT_MEDIC_LADLE = ITEM_REGISTER.registerItem(
+			"spirit_medic_ladle", SpiritMedicLadleItem::new, new Properties().stacksTo(1)
+	);
+	public static final DeferredItem<Item> GATHER_RUINS_SCROLL = ITEM_REGISTER.registerItem(
+			"gather_ruins_scroll", TechniqueScrollItem::new, new Properties()
+	);
+	public static final DeferredItem<Item> STILL_SEAL_SCROLL = ITEM_REGISTER.registerItem(
+			"still_seal_scroll", TechniqueScrollItem::new, new Properties()
+	);
+	@SuppressWarnings("deprecation")
+	public static final DeferredItem<Item> XU_SHADOW_SPAWN_EGG = ITEM_REGISTER.registerItem(
+			"xu_shadow_spawn_egg",
+			props -> new SpawnEggItem(RaEntities.XU_SHADOW.get(), 0x2B3B36, 0x9FE0D4, props),
+			new Properties()
 	);
 
 	private RaItems() {

@@ -91,6 +91,10 @@ public class CangyinTerrainGenerator extends ChunkGenerator {
 
 	private static BlockState topBlockFor(Holder<Biome> biome, int h) {
 		ResourceKey<Biome> key = biome.unwrapKey().orElse(null);
+		if (key == RuinDimensions.SHENZE_MARSH) {
+			// 沉泽墟：表层尽是淤泥，低处常年泡在水下
+			return RaBlocks.STREAM_SILT.get().defaultBlockState();
+		}
 		if (key == RuinDimensions.SHENYU_RAVINE) {
 			return (h <= 64 ? RaBlocks.STREAM_SILT : RaBlocks.QINGYUAN_LOAM).get().defaultBlockState();
 		} else if (key == RuinDimensions.PINGGAO_OLD_TOWN) {
@@ -104,9 +108,16 @@ public class CangyinTerrainGenerator extends ChunkGenerator {
 
 	private static BlockState subBlockFor(Holder<Biome> biome, int h) {
 		ResourceKey<Biome> key = biome.unwrapKey().orElse(null);
-		return key == RuinDimensions.SHENYU_RAVINE && h <= 65
+		return key == RuinDimensions.SHENZE_MARSH
 				? RaBlocks.STREAM_SILT.get().defaultBlockState()
-				: RaBlocks.XUN_SOIL.get().defaultBlockState();
+				: key == RuinDimensions.SHENYU_RAVINE && h <= 65
+						? RaBlocks.STREAM_SILT.get().defaultBlockState()
+						: RaBlocks.XUN_SOIL.get().defaultBlockState();
+	}
+
+	/** 沉泽墟整片下沉，形成积水洼地 */
+	private static int biomeHeight(Holder<Biome> biome, int raw) {
+		return biome.unwrapKey().orElse(null) == RuinDimensions.SHENZE_MARSH ? Math.max(48, raw - 5) : raw;
 	}
 
 	@Override
@@ -122,7 +133,7 @@ public class CangyinTerrainGenerator extends ChunkGenerator {
 					int wx = bx0 + x;
 					int wz = bz0 + z;
 					Holder<Biome> biome = chunk.getNoiseBiome(x >> 2, 15, z >> 2);
-					int h = terrainHeight(wx, wz);
+					int h = biomeHeight(biome, terrainHeight(wx, wz));
 					boolean onRoad = roadDistance(wx, wz) < 7;
 					BlockState top = topBlockFor(biome, h);
 					if (onRoad) {
@@ -165,13 +176,14 @@ public class CangyinTerrainGenerator extends ChunkGenerator {
 
 	@Override
 	public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level, RandomState randomState) {
-		return terrainHeight(x, z) + 1;
+		Holder<Biome> biome = this.biomeSource.getNoiseBiome(x >> 2, 15, z >> 2, Climate.empty());
+		return biomeHeight(biome, terrainHeight(x, z)) + 1;
 	}
 
 	@Override
 	public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor level, RandomState randomState) {
 		Holder<Biome> biome = this.biomeSource.getNoiseBiome(x >> 2, 15, z >> 2, Climate.empty());
-		int h = terrainHeight(x, z);
+		int h = biomeHeight(biome, terrainHeight(x, z));
 		boolean onRoad = roadDistance(x, z) < 7;
 		BlockState top = onRoad ? RaBlocks.ROAD_RUBBLE.get().defaultBlockState() : topBlockFor(biome, h);
 		BlockState sub = subBlockFor(biome, h);

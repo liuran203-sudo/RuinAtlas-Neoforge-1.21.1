@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ruinatlas:stone_plinth"
+    },
+    {
+      "item": "ruinatlas:glow_spar"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ruinatlas:ruin_lamp_base"
+  }
+}

@@ -5,6 +5,7 @@ import com.liuran.ruinatlas.init.RaItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -25,6 +26,13 @@ public class RaItemModel extends ItemModelProvider {
 			if (item instanceof BlockItem) {
 				continue;
 			}
+
+			// 刷怪蛋走原版模板模型，不需要单独贴图
+			if (item instanceof SpawnEggItem) {
+				withExistingParent(entry.getId().getPath(), mcLoc("item/template_spawn_egg"));
+				continue;
+			}
+
 			basicItem(item);
 		}
 	}

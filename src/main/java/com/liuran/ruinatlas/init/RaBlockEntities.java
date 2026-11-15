@@ -1,6 +1,7 @@
 package com.liuran.ruinatlas.init;
 
 import com.liuran.ruinatlas.blockentity.CeramicUrnBlockEntity;
+import com.liuran.ruinatlas.blockentity.SpiritConduitBlockEntity;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,6 +22,11 @@ public final class RaBlockEntities {
 			BLOCK_ENTITIES.register("ceramic_urn",
 					() -> BlockEntityType.Builder.of(CeramicUrnBlockEntity::new,
 							RaBlocks.EMPTY_CERAMIC_URN.get(), RaBlocks.SEALED_CERAMIC_URN.get()).build(null));
+
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SpiritConduitBlockEntity>> SPIRIT_CONDUIT =
+			BLOCK_ENTITIES.register("spirit_conduit",
+					() -> BlockEntityType.Builder.of(SpiritConduitBlockEntity::new,
+							RaBlocks.SPIRIT_CONDUIT.get()).build(null));
 
 	private RaBlockEntities() {
 	}

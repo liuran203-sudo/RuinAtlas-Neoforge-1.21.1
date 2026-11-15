@@ -12,7 +12,11 @@ import com.liuran.ruinatlas.block.RuinShapeBlock;
 import com.liuran.ruinatlas.block.SmashableUrnBlock;
 import com.liuran.ruinatlas.block.SpiritTestAltarBlock;
 
+import com.liuran.ruinatlas.block.InscriptionSteleBlock;
+import com.liuran.ruinatlas.block.SpiritConduitBlock;
+
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -329,6 +333,64 @@ public class RaBlocks {
 	);
 	public static final DeferredBlock<Block> CORNER_QUOIN = BLOCK_REGISTER.registerBlock("corner_quoin", Block::new, stone(1.6F, 7.0F));
 	public static final DeferredBlock<Block> CANGYIN_GATE_STELE = BLOCK_REGISTER.registerBlock("cangyin_gate_stele", GateSteleBlock::new, panel(SoundType.STONE));
+
+	// ===== 沉泽墟与古墟陈设 =====
+	public static final DeferredBlock<Block> RUIN_LAMP_BASE = BLOCK_REGISTER.registerBlock(
+			"ruin_lamp_base",
+			props -> new RuinShapeBlock(props, Block.box(4.0, 0.0, 4.0, 12.0, 10.0, 12.0)),
+			panel(SoundType.STONE).lightLevel(state -> 7)
+	);
+	public static final DeferredBlock<Block> RUBBLE_STEP = BLOCK_REGISTER.registerBlock(
+			"rubble_step", props -> new SlabBlock(props), stone(1.2F, 5.0F)
+	);
+	public static final DeferredBlock<Block> CARVED_SLAB = BLOCK_REGISTER.registerBlock("carved_slab", Block::new, stone(1.5F, 6.0F));
+	public static final DeferredBlock<Block> ROTTEN_BEAM = BLOCK_REGISTER.registerBlock(
+			"rotten_beam",
+			props -> new RotatableRuinBlock(props, Block.box(0.0, 4.0, 4.0, 16.0, 12.0, 12.0)),
+			panel(SoundType.WOOD)
+	);
+	public static final DeferredBlock<Block> SEALED_STONE_CASKET = BLOCK_REGISTER.registerBlock(
+			"sealed_stone_casket",
+			props -> new RuinShapeBlock(props, Block.box(2.0, 0.0, 2.0, 14.0, 10.0, 14.0)),
+			panel(SoundType.STONE)
+	);
+	public static final DeferredBlock<Block> XUN_BRICK_FENCE = BLOCK_REGISTER.registerBlock(
+			"xun_brick_fence", props -> new FenceBlock(props), stone(1.5F, 6.0F)
+	);
+	public static final DeferredBlock<Block> HALF_OFFERING_TABLE = BLOCK_REGISTER.registerBlock(
+			"half_offering_table",
+			props -> new RotatableRuinBlock(
+					props,
+					Shapes.or(
+							Block.box(0.0, 8.0, 0.0, 16.0, 10.0, 16.0),
+							new VoxelShape[]{Block.box(1.0, 0.0, 1.0, 5.0, 8.0, 5.0)}
+					)
+			),
+			panel(SoundType.WOOD)
+	);
+	public static final DeferredBlock<Block> SPIRIT_CONDUIT = BLOCK_REGISTER.registerBlock(
+			"spirit_conduit", SpiritConduitBlock::new, panel(SoundType.STONE).lightLevel(state -> 4)
+	);
+	// 碑刻四型：拓印碑、叙事残碑、沉水碑
+	public static final VoxelShape STELE_READING_SHAPE = Shapes.or(
+			Block.box(4.0, 0.0, 6.0, 12.0, 3.0, 10.0),
+			new VoxelShape[]{Block.box(5.0, 3.0, 7.0, 11.0, 14.0, 9.0)}
+	);
+	public static final DeferredBlock<Block> RUBBING_STELE = BLOCK_REGISTER.registerBlock(
+			"rubbing_stele",
+			props -> new InscriptionSteleBlock(props, STELE_READING_SHAPE, "block." + MODID + ".rubbing_stele.text"),
+			panel(SoundType.STONE)
+	);
+	public static final DeferredBlock<Block> STORY_STELE = BLOCK_REGISTER.registerBlock(
+			"story_stele",
+			props -> new InscriptionSteleBlock(props, STELE_READING_SHAPE, "block." + MODID + ".story_stele.text"),
+			panel(SoundType.STONE)
+	);
+	public static final DeferredBlock<Block> SUNKEN_STELE = BLOCK_REGISTER.registerBlock(
+			"sunken_stele",
+			props -> new InscriptionSteleBlock(props, STELE_READING_SHAPE, "block." + MODID + ".sunken_stele.text"),
+			panel(SoundType.STONE)
+	);
 
 	private RaBlocks() {
 	}

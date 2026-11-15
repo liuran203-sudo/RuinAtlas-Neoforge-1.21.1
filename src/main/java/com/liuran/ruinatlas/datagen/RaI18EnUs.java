@@ -155,7 +155,7 @@ public class RaI18EnUs extends LanguageProvider {
 		add("item.ruinatlas.technique_scroll.first_read", "The marks settle into your eyes: \"%s\" is first understood. Study it again to deepen the trace.");
 		add("item.ruinatlas.technique_scroll.deepen", "The trace deepens: \"%s\" now stands at %s.");
 		add("item.ruinatlas.technique_scroll.burnt", "The spirit-paper burns away. \"%s\" is complete; this scroll is spent.");
-		add("item.ruinatlas.technique_scroll.full", "Its trace is already full; studying it again gains nothing.");
+		add("item.ruinatlas.technique_scroll.full", "\"%s\" is already complete; reading it again is empty motion.");
 		add("item.ruinatlas.technique_scroll.rank_line", "Three layers of trace: First Trace · Trace Settled · Trace Complete; a complete scroll burns itself.");
 		add("item.ruinatlas.technique_scroll.tooltip", "Right-click to understand: 1 spirit for the first trace, 3 spirit for each deeper layer.");
 		add("item.ruinatlas.technique_scroll.detail", "Carries \"%s\" · spirit %s · cooldown %s s");
@@ -195,7 +195,7 @@ public class RaI18EnUs extends LanguageProvider {
 		add("key.categories.ruinatlas", "Ruin Atlas");
 		add("key.ruinatlas.cast", "Cast Form");
 		add("key.ruinatlas.wheel", "Form Wheel");
-		add("hud.ruinatlas.spirit", "Spirit %s");
+		add("hud.ruinatlas.spirit", "Spirit %s / %s");
 		add("hud.ruinatlas.technique", "\"%s\" %s");
 		add("screen.ruinatlas.wheel", "Form Wheel");
 		add("screen.ruinatlas.wheel.empty", "No scroll has been understood yet.");
@@ -220,6 +220,77 @@ public class RaI18EnUs extends LanguageProvider {
 		add("ruinatlas.configuration.logDirtBlock", "Log Dirt Block");
 		add("ruinatlas.configuration.magicNumberIntroduction", "Magic Number Text");
 		add("ruinatlas.configuration.magicNumber", "Magic Number");
+
+		//region Sunken Marsh additions
+		add(RaBlocks.RUIN_LAMP_BASE.get(), "Ruin Lamp Base");
+		add(RaBlocks.RUBBLE_STEP.get(), "Rubble Step");
+		add(RaBlocks.CARVED_SLAB.get(), "Carved Slab");
+		add(RaBlocks.ROTTEN_BEAM.get(), "Rotten Beam");
+		add(RaBlocks.SEALED_STONE_CASKET.get(), "Sealed Stone Casket");
+		add(RaBlocks.XUN_BRICK_FENCE.get(), "Ruin Brick Fence");
+		add(RaBlocks.HALF_OFFERING_TABLE.get(), "Half-Broken Offering Table");
+		add(RaBlocks.SPIRIT_CONDUIT.get(), "Spirit Conduit Stone");
+		add(RaBlocks.RUBBING_STELE.get(), "Rubbing Stele");
+		add(RaBlocks.STORY_STELE.get(), "Story Stele");
+		add(RaBlocks.SUNKEN_STELE.get(), "Sunken Stele");
+		add("block.ruinatlas.rubbing_stele.text", "Most of the inscription has been worn away by damp. One line remains: \"On the day the ruins sink, the one holding the scroll walks first.\"");
+		add("block.ruinatlas.story_stele.text", "Old record of the star terrace: above Cangyin the star paths have shifted thrice, and the ruin fire has never gone out. The stele-keeper wrote this, for those who come after to continue.");
+		add("block.ruinatlas.sunken_stele.text", "Sunken stele: water has swallowed the ruin gate and the scrolls lie at the bottom. Gatherer of fragments, forget not that three make one.");
+		add("block.ruinatlas.rubbing_stele.rubbed", "The rubbing has taken down this inscription; you may read it anywhere.");
+		add("block.ruinatlas.spirit_conduit.charge", "Conduit charge: %s / %s");
+		add("block.ruinatlas.spirit_conduit.charged", "The conduit takes spirit +%s, now holding %s.");
+
+		add(RaItems.CONTRACT_FRAGMENT.get(), "Contract Fragment");
+		add(RaItems.XU_DUST_POUCH.get(), "Ruin Dust Pouch");
+		add(RaItems.WARD_JADE_SHARD.get(), "Ward Jade Shard");
+		add(RaItems.SPIRIT_MEDIC_LADLE.get(), "Spirit Medic Ladle");
+		add(RaItems.GATHER_RUINS_SCROLL.get(), "Scroll: Gather Ruins");
+		add(RaItems.STILL_SEAL_SCROLL.get(), "Scroll: Still Seal");
+		add(RaItems.XU_SHADOW_SPAWN_EGG.get(), "Xu Shadow Spawn Egg");
+		add("item.ruinatlas.contract_fragment.tooltip", "Form: %s");
+		add("item.ruinatlas.contract_fragment.tooltip_detail", "Three fragments of the same form can be combined into a full scroll at a ruin niche.");
+		add("item.ruinatlas.contract_fragment.tooltip_unset", "The writing is too faded to tell which form this belongs to.");
+		add("item.ruinatlas.xu_dust_pouch.tooltip", "Inhale the dust of ruin soil: natural spirit recovery is faster for two minutes. Does not stack.");
+		add("item.ruinatlas.xu_dust_pouch.used", "Ruin dust enters your breath; spirit recovery quickens.");
+		add("item.ruinatlas.xu_dust_pouch.already", "The dust has not yet cleared. Do not inhale again so soon.");
+		add("item.ruinatlas.ward_jade_shard.tooltip", "Offer it at a ruin niche to lock the form you currently point to.");
+		add("item.ruinatlas.ward_jade_shard.tooltip_detail", "While locked, study and offerings only raise that one form. Sneak-offer to release the lock.");
+		add("item.ruinatlas.spirit_medic_ladle.tooltip", "Reusable: restores %s spirit at once and a little over time; %s second cooldown.");
+		add("item.ruinatlas.spirit_medic_ladle.used", "The ladle warms your spirit: +%s (%s left).");
+		add("item.ruinatlas.stele_rubbing.blank", "This rubbing is still blank. Take it to a stele first.");
+		add("item.ruinatlas.stele_rubbing.tooltip_blank", "Blank rubbing: right-click a readable stele to take its inscription with you.");
+		add("technique.ruinatlas.gather_ruins", "Gather Ruins");
+		add("technique.ruinatlas.still_seal", "Still Seal");
+		add("technique.ruinatlas.cast.silenced", "A still domain presses down; \"%s\" cannot be cast.");
+		add("technique.ruinatlas.mark.trigger", "The copper bead draws out a thread of trace: \"%s\" advances (%s).");
+		add("entity.ruinatlas.xu_shadow", "Xu Shadow");
+		add("event.ruinatlas.spirit_tide.start", "Spirit tide sweeps the ruins: mist rises from the ruin floor, and offerings and study thrive while it lasts.");
+		add("event.ruinatlas.wind_stele", "Ruin wind passes the steles: wind threads between broken stones, bringing a low moan.");
+		add("hud.ruinatlas.status.tide", "Tide");
+		add("hud.ruinatlas.status.seal", "Still Seal");
+		add("hud.ruinatlas.status.dust", "Dust");
+		add("hud.ruinatlas.status.silence", "Silenced");
+		add("hud.ruinatlas.status.ward", "Ward");
+		add("hud.ruinatlas.status.fall", "Mountain Step");
+		add("hud.ruinatlas.status.bead.flow", "Flow");
+		add("hud.ruinatlas.status.bead.mark", "Mark");
+		add("screen.ruinatlas.wheel.section.maxed", "Complete");
+		add("screen.ruinatlas.wheel.section.training", "In Training");
+		add("screen.ruinatlas.wheel.section.unknown", "Not Learned");
+		add("screen.ruinatlas.wheel.locked", "·Locked");
+		add("screen.ruinatlas.wheel.hint_scroll", "Scroll to switch forms; Shift+scroll to page the list.");
+		add("block.ruinatlas.xun_niche.converted", "The lingering will folds the completed form into spirit: +%s (%s left).");
+		add("block.ruinatlas.xun_niche.locked_filled", "The ward jade draws the trace home: \"%s\" is brought straight to completion.");
+		add("block.ruinatlas.xun_niche.locked_set", "The jade locks the form: \"%s\". Study and offerings now raise only this one.");
+		add("block.ruinatlas.xun_niche.locked_clear", "The jade lock is released; traces may branch again.");
+		add("block.ruinatlas.xun_niche.locked_need_selection", "Choose a learned form on the wheel first, then offer the jade.");
+		add("block.ruinatlas.xun_niche.fragment_more", "The fragments are not yet complete; %s more of the same form are needed.");
+		add("block.ruinatlas.xun_niche.fragment_combined", "Three pages become one: the \"%s\" scroll is formed.");
+		add("block.ruinatlas.xun_niche.bead_mode", "The copper bead's aspect turns to \"%s\".");
+		add("block.ruinatlas.xun_niche.mode.flow", "Flow");
+		add("block.ruinatlas.xun_niche.mode.mark", "Mark");
+		add("block.ruinatlas.xun_niche.hint_locked", "The niche has stood empty. Locked form: %s. Scrolls, copper beads and old relics each serve a purpose.");
+		//endregion
 		//endregion
 	}
 }

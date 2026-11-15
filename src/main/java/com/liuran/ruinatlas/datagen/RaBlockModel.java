@@ -3,14 +3,18 @@ package com.liuran.ruinatlas.datagen;
 import java.util.Set;
 
 import com.liuran.ruinatlas.block.RotatableRuinBlock;
+import com.liuran.ruinatlas.block.RuinShapeBlock;
 import com.liuran.ruinatlas.init.RaBlocks;
 
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -119,10 +123,20 @@ public class RaBlockModel extends BlockStateProvider {
 					continue;
 				}
 
+			// 栅栏：墟砖栅栏走原版 fence 组合模型
+			if (block instanceof FenceBlock fence) {
+				ResourceLocation texture = blockTexture(block);
+				fenceBlock(fence, texture);
+				itemModels().withExistingParent(path, mcLoc("block/fence_inventory")).texture("texture", texture);
+				continue;
+			}
+
 			// 有朝向的构件（案、桌、屏风、铜牌、栏杆、花窗、檐板、门框、墙龛、碑刻）
 			// 一律出四向变体，是否转向由方块类自己决定，不再维护名字白名单
-			if (block instanceof RotatableRuinBlock) {
-				ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(MODID, "block/" + path));
+			if (block instanceof RotatableRuinBlock rotatable) {
+				ModelFile model = CUSTOM_MODELS.contains(path)
+						? models().getExistingFile(ResourceLocation.fromNamespaceAndPath(MODID, "block/" + path))
+						: shapeModel(path, block, rotatable.getRuinShape());
 				var builder = getVariantBuilder(block);
 				builder.partialState().with(RotatableRuinBlock.FACING, Direction.NORTH)
 						.modelForState().modelFile(model).rotationY(0).addModel();
@@ -138,6 +152,14 @@ public class RaBlockModel extends BlockStateProvider {
 
 			if (CUSTOM_MODELS.contains(path)) {
 				simpleBlockWithItem(block, models().getExistingFile(ResourceLocation.fromNamespaceAndPath(MODID, "block/" + path)));
+				continue;
+			}
+
+			// 新加的残件方块没有手绘模型，直接按碰撞箱拼一个占位模型
+			if (block instanceof RuinShapeBlock ruinShapeBlock) {
+				ModelFile model = shapeModel(path, block, ruinShapeBlock.getRuinShape());
+				simpleBlock(block, model);
+				itemModels().withExistingParent(path, modLoc("block/" + path));
 				continue;
 			}
 
@@ -159,5 +181,22 @@ public class RaBlockModel extends BlockStateProvider {
 		ModelFile logHorizontal = models().cubeColumnHorizontal("cangyin_log_horizontal", side, end);
 		axisBlock(log, logModel, logHorizontal);
 		simpleBlockItem(log, logModel);
+	}
+
+	/** 按方块碰撞箱的每个 AABB 拼一个只有一两种材质面的占位模型 */
+	private ModelFile shapeModel(String path, Block block, VoxelShape shape) {
+		ResourceLocation texture = blockTexture(block);
+		var builder = models().getBuilder(path)
+				.texture("particle", texture)
+				.texture("all", texture);
+
+		for (AABB box : shape.toAabbs()) {
+			builder.element()
+					.from((float) box.minX, (float) box.minY, (float) box.minZ)
+					.to((float) box.maxX, (float) box.maxY, (float) box.maxZ)
+					.allFaces((direction, face) -> face.texture("#all"));
+		}
+
+		return builder;
 	}
 }

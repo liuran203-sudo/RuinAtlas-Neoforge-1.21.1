@@ -44,6 +44,8 @@ public class RaBlockTags extends BlockTagsProvider {
 				RaBlocks.EAVE_BOARD_SHARD,
 				RaBlocks.WOODEN_PILLAR_LOWER,
 				RaBlocks.WOODEN_PILLAR_UPPER,
+				RaBlocks.ROTTEN_BEAM,
+				RaBlocks.HALF_OFFERING_TABLE,
 				RaBlocks.WOODEN_SCREEN);
 
 		// ===== 松软堆积与土：铲 =====
@@ -108,7 +110,16 @@ public class RaBlockTags extends BlockTagsProvider {
 				RaBlocks.WEATHERED_XUN_BRICK,
 				RaBlocks.XUN_BRICK,
 				RaBlocks.XUN_LAYER_ROCK,
-				RaBlocks.XUN_NICHE);
+				RaBlocks.XUN_NICHE,
+				RaBlocks.RUBBLE_STEP,
+				RaBlocks.CARVED_SLAB,
+				RaBlocks.RUIN_LAMP_BASE,
+				RaBlocks.SEALED_STONE_CASKET,
+				RaBlocks.SPIRIT_CONDUIT,
+				RaBlocks.RUBBING_STELE,
+				RaBlocks.STORY_STELE,
+				RaBlocks.SUNKEN_STELE,
+				RaBlocks.XUN_BRICK_FENCE);
 
 		// 玉脉与星纹基座：需要石质镐才能掉落
 		addTags(BlockTags.NEEDS_STONE_TOOL,
@@ -124,6 +135,8 @@ public class RaBlockTags extends BlockTagsProvider {
 				RaBlocks.CANGYIN_BARK);
 		addTags(BlockTags.PLANKS,
 				RaBlocks.CANGYIN_PLANKS);
+		addTags(BlockTags.FENCES,
+				RaBlocks.XUN_BRICK_FENCE);
 
 		// ===== 自建标签：古墟残件（供后续战利品/交互引用）=====
 		addTags(RaBlockTags.RUIN_DEBRIS,

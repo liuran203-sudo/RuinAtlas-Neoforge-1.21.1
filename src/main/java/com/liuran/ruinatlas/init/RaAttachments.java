@@ -11,6 +11,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -25,6 +26,9 @@ import static com.liuran.ruinatlas.RuinAtlas.MODID;
  * 灵息不随死（本来就不是修为），契痕随死保留（已经烙进脉络）。
  */
 public final class RaAttachments {
+	/** 灵息上限：再多的遗物也只能存到这里 */
+	public static final int MAX_SPIRIT = 300;
+
 	public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES =
 			DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MODID);
 
@@ -90,6 +94,50 @@ public final class RaAttachments {
 	public static final Supplier<AttachmentType<Integer>> FREE_CASTS = ATTACHMENT_TYPES.register("free_casts",
 			() -> AttachmentType.<Integer>builder(() -> 0).serialize(Codec.INT).build());
 
+	/** 灵潮漫墟到期时刻（游戏刻） */
+	public static final Supplier<AttachmentType<Long>> SPIRIT_TIDE_UNTIL = ATTACHMENT_TYPES.register("spirit_tide_until",
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).sync(ByteBufCodecs.VAR_LONG).build());
+
+	/** 墟尘囊加成到期时刻 */
+	public static final Supplier<AttachmentType<Long>> DUST_BOOST_UNTIL = ATTACHMENT_TYPES.register("dust_boost_until",
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).sync(ByteBufCodecs.VAR_LONG).build());
+
+	/** 静封领域到期时刻 */
+	public static final Supplier<AttachmentType<Long>> DOMAIN_UNTIL = ATTACHMENT_TYPES.register("domain_until",
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).sync(ByteBufCodecs.VAR_LONG).build());
+
+	/** 静封领域中心（BlockPos#asLong） */
+	public static final Supplier<AttachmentType<Long>> DOMAIN_POS = ATTACHMENT_TYPES.register("domain_pos",
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).build());
+
+	/** 静封领域半径 */
+	public static final Supplier<AttachmentType<Integer>> DOMAIN_RADIUS = ATTACHMENT_TYPES.register("domain_radius",
+			() -> AttachmentType.<Integer>builder(() -> 0).serialize(Codec.INT).sync(ByteBufCodecs.VAR_INT).build());
+
+	/** 守墟碎玉锁定的契法 path */
+	public static final Supplier<AttachmentType<String>> LOCKED_TECHNIQUE = ATTACHMENT_TYPES.register("locked_technique",
+			() -> AttachmentType.<String>builder(() -> "").serialize(Codec.STRING).sync(ByteBufCodecs.STRING_UTF8).build());
+
+	/** 承契铜珠当前模式：flow 契润 / mark 凝痕 */
+	public static final Supplier<AttachmentType<String>> BEAD_MODE = ATTACHMENT_TYPES.register("bead_mode",
+			() -> AttachmentType.<String>builder(() -> "flow").serialize(Codec.STRING).sync(ByteBufCodecs.STRING_UTF8).build());
+
+	/** 连续供奉次数与上一次供奉时刻 */
+	public static final Supplier<AttachmentType<Integer>> OFFER_STREAK = ATTACHMENT_TYPES.register("offer_streak",
+			() -> AttachmentType.<Integer>builder(() -> 0).serialize(Codec.INT).build());
+	public static final Supplier<AttachmentType<Long>> OFFER_LAST = ATTACHMENT_TYPES.register("offer_last",
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).build());
+
+	/** 凝痕触发的内部冷却到期刻 */
+	public static final Supplier<AttachmentType<Long>> MARK_READY = ATTACHMENT_TYPES.register("mark_ready",
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).build());
+
+	/** 原地发呆计时与上一次记录的位置 */
+	public static final Supplier<AttachmentType<Integer>> IDLE_TICKS = ATTACHMENT_TYPES.register("idle_ticks",
+			() -> AttachmentType.<Integer>builder(() -> 0).serialize(Codec.INT).build());
+	public static final Supplier<AttachmentType<Long>> LAST_POS = ATTACHMENT_TYPES.register("last_pos",
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).build());
+
 	private RaAttachments() {
 	}
 
@@ -104,7 +152,7 @@ public final class RaAttachments {
 	}
 
 	public static void setSpirit(Player player, int value) {
-		player.setData(SPIRIT, Math.max(0, value));
+		player.setData(SPIRIT, Math.max(0, Math.min(MAX_SPIRIT, value)));
 	}
 
 	public static void addSpirit(Player player, int amount) {
@@ -220,5 +268,125 @@ public final class RaAttachments {
 
 	public static void setFreeCasts(Player player, int casts) {
 		player.setData(FREE_CASTS, Math.max(0, casts));
+	}
+
+	// ===== 灵潮与墟尘 =====
+
+	public static long getSpiritTideUntil(Player player) {
+		return player.getData(SPIRIT_TIDE_UNTIL);
+	}
+
+	public static void setSpiritTideUntil(Player player, long tick) {
+		player.setData(SPIRIT_TIDE_UNTIL, tick);
+	}
+
+	public static boolean isSpiritTide(Player player, long now) {
+		return getSpiritTideUntil(player) > now;
+	}
+
+	public static long getDustBoostUntil(Player player) {
+		return player.getData(DUST_BOOST_UNTIL);
+	}
+
+	public static void setDustBoostUntil(Player player, long tick) {
+		player.setData(DUST_BOOST_UNTIL, tick);
+	}
+
+	public static boolean hasDustBoost(Player player, long now) {
+		return getDustBoostUntil(player) > now;
+	}
+
+	// ===== 静封领域 =====
+
+	public static long getDomainUntil(Player player) {
+		return player.getData(DOMAIN_UNTIL);
+	}
+
+	public static void setDomain(Player player, BlockPos center, int radius, long until) {
+		player.setData(DOMAIN_POS, center.asLong());
+		player.setData(DOMAIN_RADIUS, radius);
+		player.setData(DOMAIN_UNTIL, until);
+	}
+
+	public static void clearDomain(Player player) {
+		player.setData(DOMAIN_UNTIL, 0L);
+		player.setData(DOMAIN_RADIUS, 0);
+	}
+
+	public static BlockPos getDomainCenter(Player player) {
+		return BlockPos.of(player.getData(DOMAIN_POS));
+	}
+
+	public static int getDomainRadius(Player player) {
+		return player.getData(DOMAIN_RADIUS);
+	}
+
+	// ===== 锁法与铜珠模式 =====
+
+	public static String getLockedTechnique(Player player) {
+		return player.getData(LOCKED_TECHNIQUE);
+	}
+
+	public static void setLockedTechnique(Player player, String path) {
+		player.setData(LOCKED_TECHNIQUE, path == null ? "" : path);
+	}
+
+	public static String getBeadMode(Player player) {
+		return player.getData(BEAD_MODE);
+	}
+
+	public static void setBeadMode(Player player, String mode) {
+		player.setData(BEAD_MODE, "mark".equals(mode) ? "mark" : "flow");
+	}
+
+	/** 切换铜珠模式，返回新模式 */
+	public static String toggleBeadMode(Player player) {
+		String next = "mark".equals(getBeadMode(player)) ? "flow" : "mark";
+		setBeadMode(player, next);
+		return next;
+	}
+
+	// ===== 供奉递减与凝痕冷却 =====
+
+	public static int getOfferStreak(Player player) {
+		return player.getData(OFFER_STREAK);
+	}
+
+	public static void setOfferStreak(Player player, int streak) {
+		player.setData(OFFER_STREAK, Math.max(0, streak));
+	}
+
+	public static long getOfferLast(Player player) {
+		return player.getData(OFFER_LAST);
+	}
+
+	public static void setOfferLast(Player player, long tick) {
+		player.setData(OFFER_LAST, tick);
+	}
+
+	public static long getMarkReady(Player player) {
+		return player.getData(MARK_READY);
+	}
+
+	public static void setMarkReady(Player player, long tick) {
+		player.setData(MARK_READY, tick);
+	}
+
+	// ===== 发呆计时 =====
+
+	public static int getIdleTicks(Player player) {
+		return player.getData(IDLE_TICKS);
+	}
+
+	public static void setIdleTicks(Player player, int ticks) {
+		player.setData(IDLE_TICKS, Math.max(0, ticks));
+	}
+
+	public static long getLastPos(Player player) {
+		return player.getData(LAST_POS);
+	}
+
+	public static void setLastPos(Player player, long packed) {
+		player.setData(LAST_POS, packed);
 	}
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "item": "ruinatlas:raw_spirit_stone"
+    },
+    "S": {
+      "item": "ruinatlas:polished_xun_stone"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SRS",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ruinatlas:spirit_conduit"
+  }
+}

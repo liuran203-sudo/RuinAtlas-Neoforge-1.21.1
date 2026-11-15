@@ -48,6 +48,15 @@
     "ruinatlas:weathered_xun_brick",
     "ruinatlas:xun_brick",
     "ruinatlas:xun_layer_rock",
-    "ruinatlas:xun_niche"
+    "ruinatlas:xun_niche",
+    "ruinatlas:rubble_step",
+    "ruinatlas:carved_slab",
+    "ruinatlas:ruin_lamp_base",
+    "ruinatlas:sealed_stone_casket",
+    "ruinatlas:spirit_conduit",
+    "ruinatlas:rubbing_stele",
+    "ruinatlas:story_stele",
+    "ruinatlas:sunken_stele",
+    "ruinatlas:xun_brick_fence"
   ]
 }

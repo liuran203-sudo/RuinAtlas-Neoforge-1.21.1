@@ -155,7 +155,7 @@ public class RaI18ZhCn extends LanguageProvider {
 		add("item.ruinatlas.technique_scroll.first_read", "契文入目，「%s」初契已成；再研可深契痕。");
 		add("item.ruinatlas.technique_scroll.deepen", "契痕深了一层，「%s」进至%s。");
 		add("item.ruinatlas.technique_scroll.burnt", "灵纸燃尽，「%s」契满，此卷已无用。");
-		add("item.ruinatlas.technique_scroll.full", "此卷道痕已满，再研无益。");
+		add("item.ruinatlas.technique_scroll.full", "「%s」已契满，再读也是空转。");
 		add("item.ruinatlas.technique_scroll.rank_line", "契痕三层：初契 · 道凝 · 契满，契满则灵纸自燃。");
 		add("item.ruinatlas.technique_scroll.tooltip", "右键契悟：初契耗 1 点灵息，之后每深一层耗 3 点。");
 		add("item.ruinatlas.technique_scroll.detail", "所载「%s」· 灵息 %s · 冷却 %s 秒");
@@ -195,7 +195,7 @@ public class RaI18ZhCn extends LanguageProvider {
 		add("key.categories.ruinatlas", "墟舆录");
 		add("key.ruinatlas.cast", "施展契法");
 		add("key.ruinatlas.wheel", "灵契轮盘");
-		add("hud.ruinatlas.spirit", "灵息 %s");
+		add("hud.ruinatlas.spirit", "灵息 %s / %s");
 		add("hud.ruinatlas.technique", "「%s」%s");
 		add("screen.ruinatlas.wheel", "灵契轮盘");
 		add("screen.ruinatlas.wheel.empty", "尚未契悟任何契卷。");
@@ -220,6 +220,77 @@ public class RaI18ZhCn extends LanguageProvider {
 		add("ruinatlas.configuration.logDirtBlock", "输出泥土方块日志");
 		add("ruinatlas.configuration.magicNumberIntroduction", "数字说明文本");
 		add("ruinatlas.configuration.magicNumber", "示例数字");
+
+		//region 沉泽墟新增内容
+		add(RaBlocks.RUIN_LAMP_BASE.get(), "残灯基座");
+		add(RaBlocks.RUBBLE_STEP.get(), "碎石台阶");
+		add(RaBlocks.CARVED_SLAB.get(), "刻纹石板");
+		add(RaBlocks.ROTTEN_BEAM.get(), "朽木梁");
+		add(RaBlocks.SEALED_STONE_CASKET.get(), "封石匣");
+		add(RaBlocks.XUN_BRICK_FENCE.get(), "墟砖栅栏");
+		add(RaBlocks.HALF_OFFERING_TABLE.get(), "半残供台");
+		add(RaBlocks.SPIRIT_CONDUIT.get(), "灵息引石");
+		add(RaBlocks.RUBBING_STELE.get(), "拓印碑");
+		add(RaBlocks.STORY_STELE.get(), "叙事残碑");
+		add(RaBlocks.SUNKEN_STELE.get(), "沉水碑");
+		add("block.ruinatlas.rubbing_stele.text", "碑面字迹被水汽磨去大半，只剩一句：「墟陷之日，执卷者先行。」");
+		add("block.ruinatlas.story_stele.text", "观星台旧记：苍垠之上，星轨三移，墟火不熄。守碑人以此为记，待后来者续读。");
+		add("block.ruinatlas.sunken_stele.text", "沉水碑：水没墟门，契卷沉底。拾残页者，勿忘三页归一。");
+		add("block.ruinatlas.rubbing_stele.rubbed", "拓本已记下此碑文，可随身翻阅。");
+		add("block.ruinatlas.spirit_conduit.charge", "引石蓄灵：%s / %s");
+		add("block.ruinatlas.spirit_conduit.charged", "引石纳灵 +%s，现蓄 %s。");
+
+		add(RaItems.CONTRACT_FRAGMENT.get(), "契卷残页");
+		add(RaItems.XU_DUST_POUCH.get(), "墟尘囊");
+		add(RaItems.WARD_JADE_SHARD.get(), "守墟碎玉");
+		add(RaItems.SPIRIT_MEDIC_LADLE.get(), "灵息药盏");
+		add(RaItems.GATHER_RUINS_SCROLL.get(), "契卷·敛墟");
+		add(RaItems.STILL_SEAL_SCROLL.get(), "契卷·静封");
+		add(RaItems.XU_SHADOW_SPAWN_EGG.get(), "墟影刷怪蛋");
+		add("item.ruinatlas.contract_fragment.tooltip", "所属契法：%s");
+		add("item.ruinatlas.contract_fragment.tooltip_detail", "同一种契法的三张残页，可在墟龛合成完整契卷。");
+		add("item.ruinatlas.contract_fragment.tooltip_unset", "残页字迹已模糊，不知归属何法。");
+		add("item.ruinatlas.xu_dust_pouch.tooltip", "吸一口墟土灵尘，两分钟内灵息自然恢复加快，不叠加。");
+		add("item.ruinatlas.xu_dust_pouch.used", "墟尘入息，灵息恢复加快。");
+		add("item.ruinatlas.xu_dust_pouch.already", "身中墟尘未散，别急着再吸。");
+		add("item.ruinatlas.ward_jade_shard.tooltip", "供奉给墟龛，可锁定当前所指的契法。");
+		add("item.ruinatlas.ward_jade_shard.tooltip_detail", "锁定后，研读与供奉的契痕只会落在那一门上；潜行供奉可解除。");
+		add("item.ruinatlas.spirit_medic_ladle.tooltip", "可反复使用：立刻回 %s 点灵息，并缓回一阵；冷却 %s 秒。");
+		add("item.ruinatlas.spirit_medic_ladle.used", "药盏温灵：灵息 +%s（现余 %s）。");
+		add("item.ruinatlas.stele_rubbing.blank", "这是一张空拓本，先拿去拓碑。");
+		add("item.ruinatlas.stele_rubbing.tooltip_blank", "空白拓本：对着可拓碑右键，可把碑文拓下来。");
+		add("technique.ruinatlas.gather_ruins", "敛墟");
+		add("technique.ruinatlas.still_seal", "静封");
+		add("technique.ruinatlas.cast.silenced", "静域压身，「%s」施展不出。");
+		add("technique.ruinatlas.mark.trigger", "承契铜珠激起一线契痕：「%s」进境（%s）。");
+		add("entity.ruinatlas.xu_shadow", "墟影");
+		add("event.ruinatlas.spirit_tide.start", "灵潮漫墟：灵雾自墟底漫起，此刻供奉与研读更旺。");
+		add("event.ruinatlas.wind_stele", "墟风过碑：风从断碑间穿过，带来一阵呜咽。");
+		add("hud.ruinatlas.status.tide", "灵潮");
+		add("hud.ruinatlas.status.seal", "静封");
+		add("hud.ruinatlas.status.dust", "墟尘");
+		add("hud.ruinatlas.status.silence", "敛息");
+		add("hud.ruinatlas.status.ward", "护息");
+		add("hud.ruinatlas.status.fall", "踏岳");
+		add("hud.ruinatlas.status.bead.flow", "契润");
+		add("hud.ruinatlas.status.bead.mark", "凝痕");
+		add("screen.ruinatlas.wheel.section.maxed", "已契满");
+		add("screen.ruinatlas.wheel.section.training", "正在修行");
+		add("screen.ruinatlas.wheel.section.unknown", "未习得");
+		add("screen.ruinatlas.wheel.locked", "·锁");
+		add("screen.ruinatlas.wheel.hint_scroll", "滚轮切换契法，Shift+滚轮翻页。");
+		add("block.ruinatlas.xun_niche.converted", "龛中残念把这卷已满的契法折成灵息：+%s（现余 %s）。");
+		add("block.ruinatlas.xun_niche.locked_filled", "守墟碎玉引契痕归位，「%s」直达契满。");
+		add("block.ruinatlas.xun_niche.locked_set", "碎玉锁法：「%s」。此后研读供奉只升这一门。");
+		add("block.ruinatlas.xun_niche.locked_clear", "碎玉之锁已解，契痕可再分流。");
+		add("block.ruinatlas.xun_niche.locked_need_selection", "先在轮盘上选定一门已习契法，再献碎玉。");
+		add("block.ruinatlas.xun_niche.fragment_more", "残页未齐，同法还差 %s 张。");
+		add("block.ruinatlas.xun_niche.fragment_combined", "三页归一，「%s」契卷已合成。");
+		add("block.ruinatlas.xun_niche.bead_mode", "铜珠灵相转为「%s」。");
+		add("block.ruinatlas.xun_niche.mode.flow", "契润");
+		add("block.ruinatlas.xun_niche.mode.mark", "凝痕");
+		add("block.ruinatlas.xun_niche.hint_locked", "墟龛空置已久。当前锁法：%s。献卷轴、铜珠或旧物各有效用。");
+		//endregion
 		//endregion
 	}
 }
