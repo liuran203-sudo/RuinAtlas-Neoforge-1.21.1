@@ -80,15 +80,15 @@ public final class RaAttachments {
 
 	/** 引息静默到期时刻（游戏刻） */
 	public static final Supplier<AttachmentType<Long>> SILENCED_UNTIL = ATTACHMENT_TYPES.register("silenced_until",
-			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).build());
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).sync(ByteBufCodecs.VAR_LONG).build());
 
 	/** 踏岳免摔到期时刻（游戏刻） */
 	public static final Supplier<AttachmentType<Long>> FALL_GUARD_UNTIL = ATTACHMENT_TYPES.register("fall_guard_until",
-			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).build());
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).sync(ByteBufCodecs.VAR_LONG).build());
 
 	/** 护息挡伤到期时刻（游戏刻），挡下一次伤害后立即归零 */
 	public static final Supplier<AttachmentType<Long>> WARD_UNTIL = ATTACHMENT_TYPES.register("ward_until",
-			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).build());
+			() -> AttachmentType.<Long>builder(() -> 0L).serialize(Codec.LONG).sync(ByteBufCodecs.VAR_LONG).build());
 
 	/** 墟龛代付的免灵息施术次数 */
 	public static final Supplier<AttachmentType<Integer>> FREE_CASTS = ATTACHMENT_TYPES.register("free_casts",
