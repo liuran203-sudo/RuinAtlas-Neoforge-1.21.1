@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "ruinatlas:block/step_stone",
+    "side": "ruinatlas:block/step_stone",
+    "top": "ruinatlas:block/step_stone"
+  }
+}

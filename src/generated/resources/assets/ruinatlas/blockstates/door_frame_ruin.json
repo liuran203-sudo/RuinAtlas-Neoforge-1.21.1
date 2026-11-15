@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ruinatlas:block/door_frame_ruin",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ruinatlas:block/door_frame_ruin"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/door_frame_ruin",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/door_frame_ruin",
+      "y": 270
     }
   }
 }

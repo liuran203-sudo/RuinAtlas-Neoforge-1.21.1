@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ruinatlas:block/blank_stele",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ruinatlas:block/blank_stele"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/blank_stele",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/blank_stele",
+      "y": 270
     }
   }
 }

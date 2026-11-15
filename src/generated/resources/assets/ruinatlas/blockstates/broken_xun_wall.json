@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ruinatlas:block/broken_xun_wall",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ruinatlas:block/broken_xun_wall"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/broken_xun_wall",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/broken_xun_wall",
+      "y": 270
     }
   }
 }

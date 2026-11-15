@@ -1,7 +1,13 @@
 {
   "variants": {
-    "": {
+    "type=bottom": {
+      "model": "ruinatlas:block/carved_step_slab"
+    },
+    "type=double": {
       "model": "ruinatlas:block/carved_step"
+    },
+    "type=top": {
+      "model": "ruinatlas:block/carved_step_slab_top"
     }
   }
 }

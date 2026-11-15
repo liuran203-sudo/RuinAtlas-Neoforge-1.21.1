@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ruinatlas:block/lattice_wave_window",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ruinatlas:block/lattice_wave_window"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/lattice_wave_window",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/lattice_wave_window",
+      "y": 270
     }
   }
 }

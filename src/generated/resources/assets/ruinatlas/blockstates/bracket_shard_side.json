@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ruinatlas:block/bracket_shard_side",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ruinatlas:block/bracket_shard_side"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/bracket_shard_side",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/bracket_shard_side",
+      "y": 270
     }
   }
 }

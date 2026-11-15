@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ruinatlas:block/wall_niche_small",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ruinatlas:block/wall_niche_small"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/wall_niche_small",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/wall_niche_small",
+      "y": 270
     }
   }
 }

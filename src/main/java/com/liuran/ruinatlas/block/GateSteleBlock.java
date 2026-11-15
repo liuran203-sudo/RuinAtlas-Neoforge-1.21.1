@@ -29,8 +29,9 @@ import static com.liuran.ruinatlas.RuinAtlas.MODID;
 
 /**
  * 苍垠界碑：蹲下右键在苍垠古墟界与主世界之间往返，普通右键只念碑文
+ * <p>碑面朝向玩家放置方向
  */
-public class GateSteleBlock extends RuinShapeBlock {
+public class GateSteleBlock extends RotatableRuinBlock {
 	private static final Component LORE = Component.translatable("block." + MODID + ".cangyin_gate_stele.text");
 	private static final Component ENTERED = Component.translatable("block." + MODID + ".cangyin_gate_stele.entered");
 	private static final Component RETURNED = Component.translatable("block." + MODID + ".cangyin_gate_stele.returned");

@@ -2,6 +2,7 @@ package com.liuran.ruinatlas.init;
 
 import com.liuran.ruinatlas.block.BlessingNicheBlock;
 import com.liuran.ruinatlas.block.BookCasketBlock;
+import com.liuran.ruinatlas.block.CeramicUrnBlock;
 import com.liuran.ruinatlas.block.GateSteleBlock;
 import com.liuran.ruinatlas.block.NarrativeBlock;
 import com.liuran.ruinatlas.block.PetalThicketBlock;
@@ -13,6 +14,7 @@ import com.liuran.ruinatlas.block.SpiritTestAltarBlock;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -53,7 +55,7 @@ public class RaBlocks {
 	public static final DeferredBlock<Block> CRACKED_XUN_BRICK = BLOCK_REGISTER.registerBlock("cracked_xun_brick", Block::new, stone(1.2F, 5.0F));
 	public static final DeferredBlock<Block> POLISHED_XUN_STONE = BLOCK_REGISTER.registerBlock("polished_xun_stone", Block::new, stone(1.6F, 7.0F));
 	public static final DeferredBlock<Block> BROKEN_XUN_WALL = BLOCK_REGISTER.registerBlock(
-			"broken_xun_wall", props -> new RuinShapeBlock(props, Block.box(0.0, 0.0, 5.0, 16.0, 12.0, 11.0)), panel(SoundType.STONE)
+			"broken_xun_wall", props -> new RotatableRuinBlock(props, Block.box(0.0, 0.0, 5.0, 16.0, 12.0, 11.0)), panel(SoundType.STONE)
 	);
 
 	// ===== 古建装饰方块：屋面构件 =====
@@ -68,10 +70,10 @@ public class RaBlocks {
 	// ===== 古建装饰方块：石作与碑刻 =====
 	private static final VoxelShape STELE_SHAPE = Block.box(3.0, 0.0, 6.0, 13.0, 14.0, 10.0);
 	public static final DeferredBlock<Block> BLANK_STELE = BLOCK_REGISTER.registerBlock(
-			"blank_stele", props -> new RuinShapeBlock(props, STELE_SHAPE), panel(SoundType.STONE)
+			"blank_stele", props -> new RotatableRuinBlock(props, STELE_SHAPE), panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> INSCRIBED_STELE = BLOCK_REGISTER.registerBlock(
-			"inscribed_stele", props -> new RuinShapeBlock(props, STELE_SHAPE), panel(SoundType.STONE)
+			"inscribed_stele", props -> new RotatableRuinBlock(props, STELE_SHAPE), panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> BOUNDARY_STELE = BLOCK_REGISTER.registerBlock(
 			"boundary_stele",
@@ -92,10 +94,10 @@ public class RaBlocks {
 			"stone_lantern", props -> new RuinShapeBlock(props, Block.box(4.0, 0.0, 4.0, 12.0, 14.0, 12.0)), panel(SoundType.STONE).lightLevel(state -> 12)
 	);
 	public static final DeferredBlock<Block> EMPTY_CERAMIC_URN = BLOCK_REGISTER.registerBlock(
-			"empty_ceramic_urn", props -> new RuinShapeBlock(props, Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0)), panel(SoundType.DECORATED_POT)
+			"empty_ceramic_urn", CeramicUrnBlock::new, panel(SoundType.DECORATED_POT)
 	);
 	public static final DeferredBlock<Block> SEALED_CERAMIC_URN = BLOCK_REGISTER.registerBlock(
-			"sealed_ceramic_urn", props -> new SmashableUrnBlock(props, Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0)), panel(SoundType.DECORATED_POT)
+			"sealed_ceramic_urn", SmashableUrnBlock::new, panel(SoundType.DECORATED_POT)
 	);
 	public static final DeferredBlock<Block> BONE_SACRIFICE_TABLE = BLOCK_REGISTER.registerBlock(
 			"bone_sacrifice_table", props -> new RotatableRuinBlock(props, TABLE_SHAPE), panel(SoundType.BONE_BLOCK)
@@ -110,7 +112,7 @@ public class RaBlocks {
 	);
 	public static final DeferredBlock<Block> STONE_PLINTH = BLOCK_REGISTER.registerBlock(
 			"stone_plinth",
-			props -> new RuinShapeBlock(props, Shapes.or(Block.box(1.0, 0.0, 1.0, 15.0, 4.0, 15.0), Block.box(3.0, 4.0, 3.0, 13.0, 6.0, 13.0))),
+			props -> new RuinShapeBlock(props, Shapes.or(Block.box(1.0, 0.0, 1.0, 15.0, 4.0, 15.0), Block.box(3.0, 4.0, 3.0, 13.0, 16.0, 13.0))),
 			panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> BROKEN_PILLAR_LOWER = BLOCK_REGISTER.registerBlock(
@@ -190,10 +192,10 @@ public class RaBlocks {
 	public static final DeferredBlock<Block> CARVED_STONE_PAVING = BLOCK_REGISTER.registerBlock("carved_stone_paving", Block::new, stone(1.5F, 6.0F));
 	public static final DeferredBlock<Block> BROKEN_CARVED_PAVING = BLOCK_REGISTER.registerBlock("broken_carved_paving", Block::new, stone(1.2F, 5.0F));
 	public static final DeferredBlock<Block> STEP_STONE = BLOCK_REGISTER.registerBlock(
-			"step_stone", props -> new RuinShapeBlock(props, Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)), panel(SoundType.STONE)
+			"step_stone", SlabBlock::new, stone(1.5F, 6.0F)
 	);
 	public static final DeferredBlock<Block> CARVED_STEP = BLOCK_REGISTER.registerBlock(
-			"carved_step", props -> new RuinShapeBlock(props, Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)), panel(SoundType.STONE)
+			"carved_step", SlabBlock::new, stone(1.5F, 6.0F)
 	);
 	public static final DeferredBlock<Block> FOUNDATION_SKIRT = BLOCK_REGISTER.registerBlock(
 			"foundation_skirt", props -> new RuinShapeBlock(props, Block.box(0.0, 0.0, 0.0, 16.0, 5.0, 16.0)), panel(SoundType.STONE)
@@ -202,19 +204,19 @@ public class RaBlocks {
 	// ===== 中式古建构件：柱作 =====
 	public static final DeferredBlock<Block> LOTUS_PLINTH = BLOCK_REGISTER.registerBlock(
 			"lotus_plinth",
-			props -> new RuinShapeBlock(props, Shapes.or(Block.box(1.0, 0.0, 1.0, 15.0, 5.0, 15.0), Block.box(3.0, 5.0, 3.0, 13.0, 7.0, 13.0))),
+			props -> new RuinShapeBlock(props, Shapes.or(Block.box(1.0, 0.0, 1.0, 15.0, 5.0, 15.0), Block.box(3.0, 5.0, 3.0, 13.0, 16.0, 13.0))),
 			panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> PLAIN_PLINTH = BLOCK_REGISTER.registerBlock(
 			"plain_plinth",
-			props -> new RuinShapeBlock(props, Shapes.or(Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0), Block.box(4.0, 4.0, 4.0, 12.0, 6.0, 12.0))),
+			props -> new RuinShapeBlock(props, Shapes.or(Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0), Block.box(4.0, 4.0, 4.0, 12.0, 16.0, 12.0))),
 			panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> WOODEN_PILLAR_LOWER = BLOCK_REGISTER.registerBlock(
 			"wooden_pillar_lower", props -> new RuinShapeBlock(props, Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0)), panel(SoundType.WOOD)
 	);
 	public static final DeferredBlock<Block> WOODEN_PILLAR_UPPER = BLOCK_REGISTER.registerBlock(
-			"wooden_pillar_upper", props -> new RuinShapeBlock(props, Block.box(4.0, 1.0, 4.0, 12.0, 15.0, 12.0)), panel(SoundType.WOOD)
+			"wooden_pillar_upper", props -> new RuinShapeBlock(props, Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0)), panel(SoundType.WOOD)
 	);
 	public static final DeferredBlock<Block> PILLAR_BRACE_SHARD = BLOCK_REGISTER.registerBlock(
 			"pillar_brace_shard", props -> new RuinShapeBlock(props, Block.box(2.0, 0.0, 2.0, 14.0, 5.0, 14.0)), panel(SoundType.COPPER)
@@ -222,10 +224,10 @@ public class RaBlocks {
 
 	// ===== 中式古建构件：栏杆与望柱 =====
 	public static final DeferredBlock<Block> BALUSTER_SOLID = BLOCK_REGISTER.registerBlock(
-			"baluster_solid", props -> new RuinShapeBlock(props, Block.box(0.0, 0.0, 6.0, 16.0, 12.0, 10.0)), panel(SoundType.STONE)
+			"baluster_solid", props -> new RotatableRuinBlock(props, Block.box(0.0, 0.0, 6.0, 16.0, 12.0, 10.0)), panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> BROKEN_BALUSTER = BLOCK_REGISTER.registerBlock(
-			"broken_baluster", props -> new RuinShapeBlock(props, Block.box(0.0, 0.0, 6.0, 8.0, 9.0, 10.0)), panel(SoundType.STONE)
+			"broken_baluster", props -> new RotatableRuinBlock(props, Block.box(0.0, 0.0, 6.0, 8.0, 9.0, 10.0)), panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> NEWEL_POST = BLOCK_REGISTER.registerBlock(
 			"newel_post",
@@ -240,7 +242,7 @@ public class RaBlocks {
 	);
 	public static final DeferredBlock<Block> LATTICE_WINDOW_SQUARE = BLOCK_REGISTER.registerBlock(
 			"lattice_window_square",
-			props -> new RuinShapeBlock(
+			props -> new RotatableRuinBlock(
 					props,
 					Shapes.or(
 							WINDOW_FRAME,
@@ -251,7 +253,7 @@ public class RaBlocks {
 	);
 	public static final DeferredBlock<Block> LATTICE_WAVE_WINDOW = BLOCK_REGISTER.registerBlock(
 			"lattice_wave_window",
-			props -> new RuinShapeBlock(
+			props -> new RotatableRuinBlock(
 					props,
 					Shapes.or(
 							WINDOW_FRAME,
@@ -266,13 +268,13 @@ public class RaBlocks {
 			panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> BROKEN_LATTICE = BLOCK_REGISTER.registerBlock(
-			"broken_lattice", props -> new RuinShapeBlock(props, Shapes.or(WINDOW_FRAME, Block.box(12.0, 3.0, 7.5, 13.0, 13.0, 8.5))), panel(SoundType.STONE)
+			"broken_lattice", props -> new RotatableRuinBlock(props, Shapes.or(WINDOW_FRAME, Block.box(12.0, 3.0, 7.5, 13.0, 13.0, 8.5))), panel(SoundType.STONE)
 	);
 
 	// ===== 中式古建构件：斗拱残件 =====
 	public static final DeferredBlock<Block> BRACKET_SHARD_CORNER = BLOCK_REGISTER.registerBlock(
 			"bracket_shard_corner",
-			props -> new RuinShapeBlock(
+			props -> new RotatableRuinBlock(
 					props,
 					Shapes.or(
 							Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0), new VoxelShape[]{Block.box(4.0, 4.0, 4.0, 12.0, 7.0, 12.0), Block.box(6.0, 7.0, 6.0, 13.0, 10.0, 10.0)}
@@ -282,7 +284,7 @@ public class RaBlocks {
 	);
 	public static final DeferredBlock<Block> BRACKET_SHARD_SIDE = BLOCK_REGISTER.registerBlock(
 			"bracket_shard_side",
-			props -> new RuinShapeBlock(props, Shapes.or(Block.box(1.0, 0.0, 5.0, 15.0, 5.0, 11.0), Block.box(3.0, 5.0, 6.0, 13.0, 8.0, 10.0))),
+			props -> new RotatableRuinBlock(props, Shapes.or(Block.box(1.0, 0.0, 5.0, 15.0, 5.0, 11.0), Block.box(3.0, 5.0, 6.0, 13.0, 8.0, 10.0))),
 			panel(SoundType.STONE)
 	);
 
@@ -291,16 +293,16 @@ public class RaBlocks {
 			"ridge_tile", props -> new RuinShapeBlock(props, Block.box(2.0, 0.0, 2.0, 14.0, 6.0, 14.0)), panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> RIDGE_ORNAMENT_SHARD = BLOCK_REGISTER.registerBlock(
-			"ridge_ornament_shard", props -> new RuinShapeBlock(props, Block.box(3.0, 0.0, 2.0, 11.0, 8.0, 14.0)), panel(SoundType.STONE)
+			"ridge_ornament_shard", props -> new RotatableRuinBlock(props, Block.box(3.0, 0.0, 2.0, 11.0, 8.0, 14.0)), panel(SoundType.STONE)
 	);
 	public static final DeferredBlock<Block> EAVE_BOARD_SHARD = BLOCK_REGISTER.registerBlock(
-			"eave_board_shard", props -> new RuinShapeBlock(props, Block.box(0.0, 4.0, 6.0, 16.0, 8.0, 10.0)), panel(SoundType.WOOD)
+			"eave_board_shard", props -> new RotatableRuinBlock(props, Block.box(0.0, 4.0, 6.0, 16.0, 8.0, 10.0)), panel(SoundType.WOOD)
 	);
 
 	// ===== 中式古建构件：门与墙 =====
 	public static final DeferredBlock<Block> DOOR_FRAME_RUIN = BLOCK_REGISTER.registerBlock(
 			"door_frame_ruin",
-			props -> new RuinShapeBlock(
+			props -> new RotatableRuinBlock(
 					props,
 					Shapes.or(
 							Block.box(0.0, 0.0, 6.0, 3.0, 16.0, 10.0),
@@ -311,7 +313,7 @@ public class RaBlocks {
 	);
 	public static final DeferredBlock<Block> WALL_NICHE_SMALL = BLOCK_REGISTER.registerBlock(
 			"wall_niche_small",
-			props -> new RuinShapeBlock(
+			props -> new RotatableRuinBlock(
 					props,
 					Shapes.or(
 							Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 3.0),

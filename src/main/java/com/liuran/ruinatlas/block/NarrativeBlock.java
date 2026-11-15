@@ -13,8 +13,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * 叙事方块：右键弹出一段碑文或旧事
+ * <p>碑面有正反
  */
-public class NarrativeBlock extends RuinShapeBlock {
+public class NarrativeBlock extends RotatableRuinBlock {
 	private final Component text;
 
 	public NarrativeBlock(Properties properties, VoxelShape shape, String translationKey) {

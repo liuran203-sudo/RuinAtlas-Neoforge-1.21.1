@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ruinatlas:block/eave_board_shard",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ruinatlas:block/eave_board_shard"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/eave_board_shard",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/eave_board_shard",
+      "y": 270
     }
   }
 }

@@ -1,7 +1,13 @@
 {
   "variants": {
-    "": {
+    "type=bottom": {
+      "model": "ruinatlas:block/step_stone_slab"
+    },
+    "type=double": {
       "model": "ruinatlas:block/step_stone"
+    },
+    "type=top": {
+      "model": "ruinatlas:block/step_stone_slab_top"
     }
   }
 }

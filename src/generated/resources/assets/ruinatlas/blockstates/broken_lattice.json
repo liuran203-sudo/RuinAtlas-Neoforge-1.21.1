@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ruinatlas:block/broken_lattice",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ruinatlas:block/broken_lattice"
+    },
+    "facing=south": {
+      "model": "ruinatlas:block/broken_lattice",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ruinatlas:block/broken_lattice",
+      "y": 270
     }
   }
 }

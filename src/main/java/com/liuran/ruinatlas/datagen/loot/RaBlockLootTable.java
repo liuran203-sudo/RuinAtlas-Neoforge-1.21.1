@@ -32,6 +32,10 @@ public class RaBlockLootTable extends BlockLootSubProvider {
 			dropSelf(entry.get());
 		}
 
+		// 台阶
+		add(RaBlocks.STEP_STONE.get(), createSlabItemTable(RaBlocks.STEP_STONE.get()));
+		add(RaBlocks.CARVED_STEP.get(), createSlabItemTable(RaBlocks.CARVED_STEP.get()));
+
 		//region 特殊掉落
 		// 蚀纹岩：自身 + 25% 驭灵石原石
 		add(RaBlocks.ERODED_STONE.get(), LootTable.lootTable()

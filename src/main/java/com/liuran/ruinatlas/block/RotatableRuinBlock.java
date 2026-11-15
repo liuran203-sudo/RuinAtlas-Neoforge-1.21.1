@@ -6,6 +6,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -15,7 +17,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * 有朝向的废墟构件：案、桌、屏风、铜牌一类
+ * 有朝向的废墟构件：案、桌、屏风、铜牌、栏杆、花窗、檐板、门框、碑刻一类
  * <p>放置时朝向玩家（与熔炉等原版方块一致），选中框随之旋转。
  * blockstate 由 datagen 出四向变体，模型本体直接沿用现有手绘文件并做 y 旋转。
  */
@@ -44,6 +46,18 @@ public class RotatableRuinBlock extends RuinShapeBlock {
 	@Override
 	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return shapeFor(state.getValue(FACING));
+	}
+
+	/** 结构方块/世界生成整体旋转时，朝向跟着转 */
+	@Override
+	protected BlockState rotate(BlockState state, Rotation rotation) {
+		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+	}
+
+	/** 结构镜像时朝向一起镜像 */
+	@Override
+	protected BlockState mirror(BlockState state, Mirror mirror) {
+		return state.rotate(mirror.getRotation(state.getValue(FACING)));
 	}
 
 	private VoxelShape shapeFor(Direction facing) {

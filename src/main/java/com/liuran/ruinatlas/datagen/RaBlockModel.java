@@ -10,6 +10,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -24,6 +25,7 @@ import static com.liuran.ruinatlas.RuinAtlas.MODID;
  *   <li>手绘自定义模型（Blockbench 导出，放在 src/main/resources/assets/ruinatlas/models/block）
  *       —— 只生成 blockstate 与 item 模型，模型本体直接引用现成文件，不再覆盖</li>
  *   <li>古木（RotatedPillarBlock）—— 走 cube_column + axis 变体 × 3</li>
+ *   <li>台阶（SlabBlock）—— 走原版 slab / slab_top / 整块三种模型</li>
  *   <li>其余 —— 统一 cube_all 占位</li>
  * </ol>
  */
@@ -46,7 +48,6 @@ public class RaBlockModel extends BlockStateProvider {
 			"broken_xun_wall",
 			"cangyin_gate_stele",
 			"cangyin_offering_table",
-			"carved_step",
 			"city_curb",
 			"collapsed_kiosk",
 			"door_frame_ruin",
@@ -70,7 +71,6 @@ public class RaBlockModel extends BlockStateProvider {
 			"sealed_ceramic_urn",
 			"spirit_platform",
 			"spirit_test_altar",
-			"step_stone",
 			"stone_incense_table",
 			"stone_lantern",
 			"stone_plinth",
@@ -92,15 +92,6 @@ public class RaBlockModel extends BlockStateProvider {
 			"xun_wild_grass"
 	);
 
-	/** 有朝向的陈设：案、桌、屏风、铜牌，blockstate 出四向变体 */
-	private static final Set<String> FACING_BLOCKS = Set.of(
-			"bone_sacrifice_table",
-			"cangyin_offering_table",
-			"rusted_bronze_panel",
-			"stone_incense_table",
-			"wooden_screen"
-	);
-
 	public RaBlockModel(PackOutput output, ExistingFileHelper exFileHelper) {
 		super(output, MODID, exFileHelper);
 	}
@@ -116,7 +107,21 @@ public class RaBlockModel extends BlockStateProvider {
 				continue;
 			}
 
-			if (FACING_BLOCKS.contains(path)) {
+			// 台阶：继承原版台阶（SlabBlock），走原版 type=bottom/top/double 变体，
+				// 下半与上半各一张 slab 模型，双台阶用整块模型
+				if (block instanceof SlabBlock slab) {
+					ResourceLocation texture = blockTexture(block);
+					slabBlock(slab,
+							models().slab(path + "_slab", texture, texture, texture),
+							models().slabTop(path + "_slab_top", texture, texture, texture),
+							models().cubeAll(path, texture));
+					itemModels().withExistingParent(path, modLoc("block/" + path + "_slab"));
+					continue;
+				}
+
+			// 有朝向的构件（案、桌、屏风、铜牌、栏杆、花窗、檐板、门框、墙龛、碑刻）
+			// 一律出四向变体，是否转向由方块类自己决定，不再维护名字白名单
+			if (block instanceof RotatableRuinBlock) {
 				ModelFile model = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(MODID, "block/" + path));
 				var builder = getVariantBuilder(block);
 				builder.partialState().with(RotatableRuinBlock.FACING, Direction.NORTH)
