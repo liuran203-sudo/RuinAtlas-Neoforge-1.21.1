@@ -12,7 +12,7 @@ import static com.liuran.ruinatlas.RuinAtlas.MODID;
 /**
  * 客户端注册：粒子渲染提供器
  */
-@EventBusSubscriber(modid = MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public final class RuinAtlasClient {
 	private RuinAtlasClient() {
 	}

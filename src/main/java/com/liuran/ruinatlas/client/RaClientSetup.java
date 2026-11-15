@@ -12,7 +12,7 @@ import static com.liuran.ruinatlas.RuinAtlas.MODID;
 /**
  * 客户端注册：按键 + 灵息 HUD
  */
-@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public final class RaClientSetup {
 	private RaClientSetup() {
 	}

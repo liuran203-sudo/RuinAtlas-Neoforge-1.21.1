@@ -104,7 +104,7 @@ public class GateSteleBlock extends RotatableRuinBlock {
 					if (Math.max(Math.abs(dx), Math.abs(dz)) == r) {
 						int px = x + dx;
 						int pz = z + dz;
-						if (surfaceY(level, px, pz) > level.getSeaLevel() + 1) {
+						if (surfaceY(level, px, pz) > level.getChunkSource().getGenerator().getSeaLevel() + 1) {
 							return new BlockPos(px, 0, pz);
 						}
 					}

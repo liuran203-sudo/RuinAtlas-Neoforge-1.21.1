@@ -57,7 +57,7 @@ public class RotatableRuinBlock extends RuinShapeBlock {
 	/** 结构镜像时朝向一起镜像 */
 	@Override
 	protected BlockState mirror(BlockState state, Mirror mirror) {
-		return state.rotate(mirror.getRotation(state.getValue(FACING)));
+		return state.setValue(FACING, mirror.mirror(state.getValue(FACING)));
 	}
 
 	private VoxelShape shapeFor(Direction facing) {

@@ -10,7 +10,7 @@ import static com.liuran.ruinatlas.RuinAtlas.MODID;
 /**
  * 本模组的网络包：只走客户端 → 服务端
  */
-@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MODID)
 public final class RaNetwork {
 	private RaNetwork() {
 	}
